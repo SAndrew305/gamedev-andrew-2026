@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t1a01</title>
+    <title>t1a03</title>
     <style>
       body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -21,5 +21,48 @@
     </style>
 </head>
 <body>
-    <h1></h1>
+    <h1>t1a03-forms</h1>
+    
+    <!--todo: add form details-->
+    <form>
+        <input type="text" id="text1" value="fahhh">
+
+        <!--checkboxes--><br>
+        type1<input type="checkbox"><br>
+        type2<input type="checkbox"><br>
+
+        <!--radio buttons--><br>
+        rad1<input type="radio" name="vomit" value=""><br>
+        rad2<input type="radio" name="puke" value=""><br>
+
+        <!--misc--><br>
+        hidden:<input type="hidden"><br> 
+        file:<input type="file"><br> 
+        reset:<input type="reset"><br> 
+        submit:<input type="submit"><br><br>
+
+        button:<input type="button" value="press moi" onclick="{
+            document.getElementById('area51').value = 'sorry did you expect something exciting to happen?'
+        }"><br><br>
+
+        <!--textarea-->
+        <textarea id="area51" cols="60" rows="5"></textarea><br><br>
+        
+        <!--select box-->
+        <select id="illnamethisidselenaCuzWhyNot" size=3 onChange="{
+            document.getElementById('area51').value = 
+            document.getElementById('illnamethisidselenaCuzWhyNot').value
+        }">
+
+            <!--option embedded in select-->
+            <option value="optVal1">juan</option>
+            <option value="optVal2">deux ex</option>
+            <option value="optVal3">tree</option>
+        </select>
+    </form>
+    <p>Last commit: <span id="lastModified"></span></p>
 </body>
+<script>
+        // Display the document last modified date
+        document.getElementById('lastModified').textContent = document.lastModified;
+</script>
