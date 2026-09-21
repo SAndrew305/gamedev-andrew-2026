@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="../baseline.css">
+</head>
+<body>
+    <h1>t1a05 - I/O</h1>
+        <a href="https://w3schools.com/jsref/prop_html_innerhtml.asp">
+            reference to I/O - innerHTML value
+        </a>
+        <!-- my god this takes so long to do...
+            
+            i wish there was some form of neural interface that could allow
+            me to type crap out with my mind, because holy hell this takes a
+            long-ass time
+        -->
+        <br>
+        <h5>example i/o in js</h5>
+        <pre>
+            inputJuan = document.getElementById('numberJuan').value
+            document.getElementById('division1').innerHTML = ''
+        </pre>
+        
+        <!--can i pretty please switch to c?
+        this type of thing is so borring-->
+
+        <br><h5>example functioning code</h5>
+        <input id="numberJuan" type="number" value="4"><br>
+
+        <input type="button" value="idk what to put into here" onclick="{
+            let inputJuan = parseFloat(document.getElementById('aValue').value)
+            let answer = inputJuan * inputJuan
+            document.getElementById(division).innerHTML = inputJuan + ' squared = ' + answer
+        }"><br>
+        <!-- the hell does this even do?-->
+
+        <div id="division">...</div>
+</body>
