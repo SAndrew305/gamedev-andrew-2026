@@ -25,17 +25,30 @@
         </pre>
         
         <!--can i pretty please switch to c?
-        this type of thing is so borring-->
+        this type of thing is so borring
+        
+        9/22 - 
+        but anyways, looking back at the code, it looks like big E wants this to be a
+        calculator of sorts, which squares the number by multiplying it by itself,
+        hence 
+        "let answer = inputJuan * inputJuan".
+
+        anyways. 
+        -->
 
         <br><h5>example functioning code</h5>
+
         <input id="numberJuan" type="number" value="4"><br>
 
-        <input type="button" value="idk what to put into here" onclick="{
-            let inputJuan = parseFloat(document.getElementById('aValue').value)
+        <input type="button" value="square number" onclick="{
+            let inputJuan = parseFloat(document.getElementById('numberJuan').value)
             let answer = inputJuan * inputJuan
-            document.getElementById(division).innerHTML = inputJuan + ' squared = ' + answer
+            document.getElementById('division').innerHTML = inputJuan + ' squared = ' + answer
+            /* it's stupid that the values for inputJuan weren't the same, and even worse that
+            the division id needed quotations. then again, i am a beginner who knows jack about
+            how any of this actually works...*/
         }"><br>
-        <!-- the hell does this even do?-->
 
         <div id="division">...</div>
 </body>
+<!-- clarification done in class on 9/22. -->
