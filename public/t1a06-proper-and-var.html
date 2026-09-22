@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>t1a06</title>
+    <link rel="stylesheet" href="../baseline.css">
+    <style>
+        b {
+            color: #00f;
+        }
+    </style>
+    <script>
+        function speakHello() {
+            fNum = 3;
+            fString = ' Hello ';
+            fFloat = 17.5;
+            fBool = true;
+            fOut = document.getElementById('bDiv1');
+            fOut.innerHTML = fNum + fString + fFloat + ', ' + fBool;
+            if (fBool) {fOut.innerHTML += ', HOW';}
+        }
+    </script>
+</head>
+<body>
+<h1>t1a06 - variables</h1>
+    <p><b>bold text</b></p>
+    <button onclick="speakHello()">click ths</button>
+    <div id="bDiv1">...</div>
+</body>
+</html>
