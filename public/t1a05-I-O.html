@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <link rel="stylesheet" href="../baseline.css">
+</head>
+<body>
+    <h1>t1a05 - I/O</h1>
+        <a href="https://w3schools.com/jsref/prop_html_innerhtml.asp">
+            reference to I/O - innerHTML value
+        </a>
+        <!-- my god this takes so long to do...
+            
+            i wish there was some form of neural interface that could allow
+            me to type crap out with my mind, because holy hell this takes a
+            long-ass time
+        -->
+        <br>
+        <h5>example i/o in js</h5>
+        <pre>
+            inputJuan = document.getElementById('numberJuan').value
+            document.getElementById('division1').innerHTML = ''
+        </pre>
+        
+        <!--can i pretty please switch to c?
+        this type of thing is so borring
+        
+        9/22 - 
+        but anyways, looking back at the code, it looks like big E wants this to be a
+        calculator of sorts, which squares the number by multiplying it by itself,
+        hence 
+        "let answer = inputJuan * inputJuan".
+
+        anyways. 
+        -->
+
+        <h5>example functioning code</h5>
+
+        <input id="numberJuan" type="number" value="4"><br>
+
+        <input type="button" value="square number" onclick="{
+            let inputJuan = parseFloat(document.getElementById('numberJuan').value)
+            let answer = inputJuan * inputJuan
+            document.getElementById('division').innerHTML = inputJuan + ' squared = ' + answer
+            /* it's stupid that the values for inputJuan weren't the same, and even worse that
+            the division id needed quotations. then again, i am a beginner who knows jack about
+            how any of this actually works...*/
+        }"><br>
+
+        <div id="division">...</div>
+</body>
+<!-- clarification done in class on 9/22. -->
