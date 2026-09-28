@@ -4,11 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>t1a06</title>
-    <link rel="stylesheet" href="../baseline.css">
     
     <style>
-        b {
-            color: #00f;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;            
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+
+            background-image: linear-gradient(to bottom right, #f0f4f8, #d9e2ec, #bcccdc);
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+
+            color: #000;
+            transition: color 2s ease-in-out;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: linear-gradient(to bottom right, #37383a, #1e1f20, #5b636b);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        body.dark {
+            color: #fff;
+        }
+
+        body.dark::after {
+            opacity: 1;
+        }
+
+        @keyframes swiftBackgroundChange {
+            0%  {
+                background: linear-gradient(to bottom right, #f0f4f8, #d9e2ec, #bcccdc);
+                color: #000000;
+            }
+            
+            100% {
+                background: linear-gradient(to bottom right, #37383a, #1e1f20, #5b636b);
+                color: #ffffff;
+            }
         }
     </style>
 
@@ -22,6 +61,9 @@
             fOut.innerHTML = fNum + fString + fFloat + ', ' + fBool;
             if (fBool) {fOut.innerHTML += ', HOW';}
         }
+        function shiftBackground() {
+            document.body.classList.add("dark");
+        }
     </script>
 </head>
 <body>
@@ -29,6 +71,8 @@
         <p><b>bold text</b></p>
         <button onclick="speakHello()">click ths</button>
         <div id="bDiv1">...</div>
-        
+
+        <button onclick="shiftBackground()" id="pressMe">Dark Mode</button>
+
 </body>
 </html>
