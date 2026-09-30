@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>t1a08</title>
+    <link rel="stylesheet" href="../baseline.css">
+</head>
+<body>
+
+<h1>t1a08 - loops</h1>
+
+<a href="https://www.w3schools.com/programming/prog_loops.php">loops refrence.</a><br>
+
+<pre>
+// example i/o code
+
+for (let l = 0; l <= maxValue; l++)
+/* | starting |   condition  | change of
+*/ |   value  |              | counting var
+
+// yay i made an info graphic
+{
+    // put code here
+}
+----------------------------------------------------------------
+</pre>
+
+<b>Example of working code based on the above example:</b><br>
+
+max loops <input id="n1" type="number" value="0"><br>
+number idk anything about <input id="a" type="number" value="0"><br>
+
+<input type="button" value="basic 'for' loop w/ conditions" onClick="{
+    document.getElementById('d').innerHTML = ''
+    let t= ''
+    let max= parseInt(document.getElementById('n1').value)
+
+    for (let l1=0; l1<max; l1++){
+        if (l1 * 2 > max){
+            t += 'thing1 happened'
+        }
+        t += 'loop number: ' + l1 + '<br>'
+    }
+    document.getElementById('d').innerHTML = t
+
+}"><br>
+
+<input type="button" value="even number identifier" onClick="{
+    document.getElementById('d').innerHTML = ''
+    let t = ''
+
+    let max= parseInt(document.getElementById('n1').value)
+
+    for (let l1=0; l1<max ;l1++) {
+        if (l1 %2 == 0){
+            t += 'even num,'
+            }
+        t1='loop number: '+l1+'<br>'
+        }
+     document.getElementById('d').innerHTML = t
+}">
+
+<div id="d"><font color=red>...</font></div>
+
+<pre>
+----------------------------------------------------------------
+
+// example of other forms of loops - for extra credit. written in c cuz why not
+
+    // the loop you saw above was a "for" loop. uses a counting variable to track
+    // how long the code has run for and when it should stop. it consists of three
+    // sections: a starting value, a condition, and a description of how the variable should
+    //           change each time it loops.
+
+
+    // now about the other important loop, the "while" loop... i'm working on it because
+    // holy hell my day is busy
+
+
+
+
+
+</pre>
+</body>
