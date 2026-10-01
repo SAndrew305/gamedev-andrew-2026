@@ -28,40 +28,43 @@ for (let l = 0; l <= maxValue; l++)
 
 <b>Example of working code based on the above example:</b><br>
 
-max loops <input id="n1" type="number" value="0"><br>
-number idk anything about <input id="a" type="number" value="0"><br>
+<!-- apparently my goldfish sized brain can't remember single letter variables -->
+
+max loops <input id="num1" type="number" value="0"><br>
+number idk anything about <input id="oddity" type="number" value="0"><br>
 
 <input type="button" value="basic 'for' loop w/ conditions" onClick="{
-    document.getElementById('d').innerHTML = ''
+    document.getElementById('div1').innerHTML = ''
     let t= ''
-    let max= parseInt(document.getElementById('n1').value)
+    let max= parseInt(document.getElementById('num1').value)
 
-    for (let l1=0; l1<max; l1++){
-        if (l1 * 2 > max){
-            t += 'thing1 happened'
+    for (let loop1=0; loop1<max; loop1++){
+        if (loop1 * 2 > max){
+            t += 'thing1 happened! '
         }
-        t += 'loop number: ' + l1 + '<br>'
+        t += 'loop number: ' + loop1 + '<br>'
     }
-    document.getElementById('d').innerHTML = t
+    document.getElementById('div1').innerHTML = t
 
 }"><br>
 
 <input type="button" value="even number identifier" onClick="{
-    document.getElementById('d').innerHTML = ''
+    document.getElementById('div1').innerHTML = ''
     let t = ''
 
-    let max= parseInt(document.getElementById('n1').value)
+    let max= parseInt(document.getElementById('num1').value)
 
-    for (let l1=0; l1<max ;l1++) {
-        if (l1 %2 == 0){
-            t += 'even num,'
+    for (let loop1=0; loop1<max ;loop1++) {
+        if (loop1 %2 == 0){
+            t += 'even num, '
             }
-        t1='loop number: '+l1+'<br>'
+        t1='loop number: '+ loop1 +'<br>'
         }
-     document.getElementById('d').innerHTML = t
+     document.getElementById('div1').innerHTML = t
 }">
 
-<div id="d"><font color=red>...</font></div>
+<!-- ohh, so it wasn't my fault. javascript just reaallly doesn't like single letter variables. -->
+<div id="div1"><font color=red>...</font></div>
 
 <pre>
 ----------------------------------------------------------------
