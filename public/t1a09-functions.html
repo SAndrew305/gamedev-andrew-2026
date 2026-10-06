@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>t1a09</title>
+    <link rel="stylesheet" href="../baseline.css">
+</head>
+<script>
+
+function exampleFunction() {
+    let input1 = parseInt(document.getElementById('text1').value);
+    let sum1 = input1 + input1;
+    let reply = input1 + ' + ' + input1 + ' = ' + sum1;
+    return reply
+}
+
+</script>
+<body>
+
+    <h1>t1a09-functions</h1>
+    <a href="https://www.w3schools.com/programming/prog_functions.php">General refrence to functions</a><br><br>
+
+    // functions are used to organize code, which are then called later in another place of the code.<br>
+    // information can also be passed onto functions (more on that later) <br>
+
+    <h4>example of the functioning code</h4>
+    ----------<br>
+    <input type="text" id="text1" value="8"><br>
+    
+    <input type="button" value="function example" onClick="{
+        document.getElementById('division1').innerHTML = exampleFunction()
+    }">
+
+    <div id="division1">...</div>
+
+</body>
