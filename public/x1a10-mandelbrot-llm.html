@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mandelbrot · infinite zoom</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+        }
+        canvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        .hint {
+            position: fixed;
+            bottom: 14px;
+            left: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 6px 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            pointer-events: none;
+            z-index: 10;
+            transition: opacity 0.8s;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .toggle {
+            position: fixed;
+            bottom: 14px;
+            right: 14px;
+            color: #fff;
+            background: rgba(20, 20, 24, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            padding: 6px 18px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 20;
+            transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+            user-select: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            letter-spacing: 0.2px;
+        }
+        .toggle:hover {
+            background: rgba(50, 50, 60, 0.9);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.6);
+        }
+        .toggle.active {
+            background: linear-gradient(135deg, #2a6f97 0%, #4a9bc7 100%);
+            border-color: #8ecae6;
+            box-shadow: 0 0 20px rgba(142, 202, 230, 0.4);
+        }
+        .toggle:active { transform: translateY(0) scale(0.97); }
+
+        /* Bottom-center control strip */
+        .controls {
+            position: fixed;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            background: rgba(15, 15, 20, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 5px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 20;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+        .controls:hover { opacity: 1; }
+        .ctrl-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 6px 12px;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+        }
+        .ctrl-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        .ctrl-btn.active {
+            background: rgba(142, 202, 230, 0.2);
+            color: #8ecae6;
+        }
+        .ctrl-sep {
+            width: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 4px 2px;
+        }
+
+        /* Status readout */
+        .status {
+            position: fixed;
+            top: 14px;
+            left: 14px;
+            color: rgba(255,255,255,0.65);
+            font-size: 11px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 5px 12px;
+            border-radius: 20px;
+            pointer-events: none;
+            z-index: 10;
+            font-variant-numeric: tabular-nums;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            letter-spacing: 0.3px;
+            line-height: 1.4;
+        }
+        .status b { color: #8ecae6; font-weight: 600; }
+
+        /* FPS counter */
+        .fps {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            background: rgba(0,0,0,0.4);
+            padding: 5px 12px;
+            border-radius: 20px;
+            pointer-events: none;
+            z-index: 10;
+            font-variant-numeric: tabular-nums;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* Flash overlay for reset */
+        .flash {
+            position: fixed;
+            inset: 0;
+            background: white;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.4s ease-out;
+        }
+        .flash.on { opacity: 0.15; transition: none; }
+
+        /* Zoom level indicator (bottom center, floating) */
+        .zoom-readout {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            color: rgba(255,255,255,0.85);
+            font-size: 22px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.35s, transform 0.35s;
+            text-shadow: 0 0 20px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,0.9);
+            font-variant-numeric: tabular-nums;
+        }
+        .zoom-readout.show {
+            opacity: 0.9;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="mandelbrotCanvas"></canvas>
+    <div class="hint" id="hint">🖱️ scroll to zoom · drag to pan · <b>R</b> reset · <b>A</b> auto · deep mode at high zoom</div>
+
+    <div class="status" id="status">ready</div>
+    <div class="fps" id="fps">– fps</div>
+
+    <div class="zoom-readout" id="zoomReadout"></div>
+    <div class="flash" id="flash"></div>
+
+    <div class="controls">
+        <button class="ctrl-btn" id="btnPalette">🎨 palette</button>
+        <div class="ctrl-sep"></div>
+        <button class="ctrl-btn" id="btnReset">↺ reset</button>
+        <div class="ctrl-sep"></div>
+        <button class="ctrl-btn" id="btnScreenshot">⤓ save</button>
+        <div class="ctrl-sep"></div>
+        <button class="ctrl-btn active" id="btnSmooth">smooth</button>
+    </div>
+
+    <div id="toggleBtn" class="toggle">▶ auto‑zoom</div>
+
+    <script>
+        (function() {
+            const canvas = document.getElementById('mandelbrotCanvas');
+            const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
+            const statusEl = document.getElementById('status');
+            const fpsEl = document.getElementById('fps');
+            const zoomReadout = document.getElementById('zoomReadout');
+            const flashEl = document.getElementById('flash');
+
+            // ---------- VIEW STATE ----------
+            let centerX = -0.5;
+            let centerY = 0.0;
+            let zoom = 1.0;
+
+            let minRe, maxRe, minIm, maxIm;
+
+            let colorPhase = 0.0;
+
+            // auto-zoom
+            let autoZoom = false;
+            const AUTO_ZOOM_SPEED = 0.012;
+
+            // interaction
+            let isDragging = false;
+            let lastMouseX = 0, lastMouseY = 0;
+
+            // ---------- VISUAL OPTIONS ----------
+            let paletteIndex = 0;
+            let smoothColoring = true;
+
+            // Multiple palettes for flair
+            const PALETTES = [
+                // 0: classic vibrant rainbow
+                (t) => [
+                    Math.sin(t * 0.8) * 0.5 + 0.5,
+                    Math.sin(t * 1.2 + 2.0) * 0.5 + 0.5,
+                    Math.sin(t * 1.6 + 4.0) * 0.5 + 0.5
+                ],
+                // 1: fire / ember
+                (t) => [
+                    Math.sin(t * 0.7 + 0.5) * 0.5 + 0.6,
+                    Math.sin(t * 0.9 + 1.8) * 0.4 + 0.25,
+                    Math.sin(t * 1.4 + 3.0) * 0.3 + 0.1
+                ],
+                // 2: ocean / deep blue
+                (t) => [
+                    Math.sin(t * 0.6 + 1.2) * 0.35 + 0.15,
+                    Math.sin(t * 0.9 + 2.5) * 0.4 + 0.45,
+                    Math.sin(t * 1.1 + 0.8) * 0.5 + 0.55
+                ],
+                // 3: monochrome / ice
+                (t) => {
+                    const v = Math.sin(t * 1.3) * 0.5 + 0.5;
+                    return [v * 0.9, v * 0.95, v];
+                },
+                // 4: neon cyberpunk
+                (t) => [
+                    Math.sin(t * 1.5 + 0.3) * 0.5 + 0.55,
+                    Math.sin(t * 0.7 + 2.8) * 0.5 + 0.2,
+                    Math.sin(t * 2.1 + 1.1) * 0.5 + 0.6
+                ]
+            ];
+            const PALETTE_NAMES = ['rainbow', 'ember', 'ocean', 'ice', 'neon'];
+
+            // Precomputed palette LUT (rebuilt on palette change)
+            const PALETTE = new Uint8Array(256 * 3);
+            function rebuildPalette() {
+                const fn = PALETTES[paletteIndex];
+                for (let i = 0; i < 256; i++) {
+                    const t = (i / 255) * Math.PI * 2;
+                    const [r, g, b] = fn(t);
+                    PALETTE[i*3]     = Math.max(0, Math.min(255, Math.floor(r * 255)));
+                    PALETTE[i*3 + 1] = Math.max(0, Math.min(255, Math.floor(g * 255)));
+                    PALETTE[i*3 + 2] = Math.max(0, Math.min(255, Math.floor(b * 255)));
+                }
+            }
+            rebuildPalette();
+
+            // ---------- RENDER QUALITY ----------
+            const DPR_CAP = 1.0;
+            const PREVIEW_SCALE = 0.16;
+            const REFINE_SCALES = [0.4, 0.65, 0.85];
+            const INTERACTION_SCALE = 0.5;
+            let interactionMode = false;
+            let interactionTimer = null;
+
+            function markInteraction() {
+                interactionMode = true;
+                if (interactionTimer) clearTimeout(interactionTimer);
+                interactionTimer = setTimeout(() => {
+                    interactionMode = false;
+                    requestRender();
+                }, 140);
+            }
+            const BASE_ITER = 60;
+            const MAX_ITER_HARD = 400;
+            const DEEP_ZOOM_THRESHOLD = 1e7;
+            const DEEP_ITER_CAP = 1600;
+
+            // ---------- RESIZE ----------
+            function resizeCanvas() {
+                const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
+                const cssW = window.innerWidth;
+                const cssH = window.innerHeight;
+                canvas.width = Math.floor(cssW * dpr);
+                canvas.height = Math.floor(cssH * dpr);
+                canvas.style.width = cssW + 'px';
+                canvas.style.height = cssH + 'px';
+                updateBounds();
+                requestRender();
+            }
+
+            function updateBounds() {
+                const w = canvas.width, h = canvas.height;
+                if (w === 0 || h === 0) return;
+                const baseWidth = 3.5;
+                const aspect = w / h;
+                const baseHeight = baseWidth / aspect;
+                const spanX = baseWidth / zoom;
+                const spanY = baseHeight / zoom;
+                minRe = centerX - spanX / 2;
+                maxRe = centerX + spanX / 2;
+                minIm = centerY - spanY / 2;
+                maxIm = centerY + spanY / 2;
+            }
+
+            // ---------- RENDER SCHEDULER ----------
+            let renderPending = false;
+            let renderToken = 0;
+
+            function requestRender() {
+                if (renderPending) return;
+                renderPending = true;
+                requestAnimationFrame(() => {
+                    renderPending = false;
+                    startRender();
+                });
+            }
+
+            // ---------- OFFSCREEN CANVAS (reused) ----------
+            const offCanvas = document.createElement('canvas');
+            const offCtx = offCanvas.getContext('2d', { alpha: false });
+
+            // ---------- PROGRESSIVE RENDERER ----------
+            function startRender() {
+                const token = ++renderToken;
+                const w = canvas.width, h = canvas.height;
+                if (w === 0 || h === 0) return;
+
+                const snap = { w, h, minRe, maxRe, minIm, maxIm, zoom };
+
+                // Gentler iteration growth
+                const iterScale = Math.pow(Math.max(0, Math.log10(zoom + 1)), 0.85) * 40;
+                let iterLimit = Math.floor(BASE_ITER + iterScale);
+                const iterationCap = zoom >= DEEP_ZOOM_THRESHOLD ? DEEP_ITER_CAP : MAX_ITER_HARD;
+                if (iterLimit > iterationCap) iterLimit = iterationCap;
+                if (iterLimit < 64) iterLimit = 64;
+
+                const phaseOffset = (Math.floor(colorPhase * 256) % 256 + 256) % 256;
+                const scales = interactionMode
+                    ? [INTERACTION_SCALE]
+                    : [PREVIEW_SCALE, ...REFINE_SCALES];
+
+                function renderPass(passIndex) {
+                    if (token !== renderToken) return;
+
+                    const scale = scales[passIndex];
+                    const rw = Math.max(1, Math.floor(snap.w * scale));
+                    const rh = Math.max(1, Math.floor(snap.h * scale));
+
+                    if (offCanvas.width !== rw || offCanvas.height !== rh) {
+                        offCanvas.width = rw;
+                        offCanvas.height = rh;
+                    }
+
+                    const reStep = (snap.maxRe - snap.minRe) / rw;
+                    const imStep = (snap.maxIm - snap.minIm) / rh;
+
+                    // Precompute coordinates once per pass instead of recalculating
+                    // min + index * step for every pixel.
+                    const xCoords = new Float64Array(rw);
+                    const yCoords = new Float64Array(rh);
+                    for (let px = 0; px < rw; px++) xCoords[px] = snap.minRe + px * reStep;
+                    for (let py = 0; py < rh; py++) yCoords[py] = snap.minIm + py * imStep;
+
+                    const imageData = offCtx.createImageData(rw, rh);
+                    const data = imageData.data;
+
+                    // Reference orbit for the canonical deep-zoom target. The orbit is
+                    // computed once per render pass; pixels are evaluated as deltas
+                    // around this reference when zoomed in deeply.
+                    const deepMode = snap.zoom >= DEEP_ZOOM_THRESHOLD;
+                    const refX = -0.743643887037151;
+                    const refY = 0.13182590420533;
+                    const refR = new Float64Array(passIter + 1);
+                    const refI = new Float64Array(passIter + 1);
+                    if (deepMode) {
+                        let rr = 0, ri = 0;
+                        for (let k = 0; k < passIter; k++) {
+                            const nextR = rr * rr - ri * ri + refX;
+                            ri = 2 * rr * ri + refY;
+                            rr = nextR;
+                            refR[k + 1] = rr;
+                            refI[k + 1] = ri;
+                            if (rr * rr + ri * ri > 1e100) break;
+                        }
+                    }
+
+                    const passIter = passIndex === 0
+                        ? Math.max(32, Math.floor(iterLimit * 0.5))
+                        : iterLimit;
+
+                    // Fast bailout check
+                    let idx = 0;
+                    for (let py = 0; py < rh; py++) {
+                        const im = yCoords[py];
+                        const imMinusQuarter = im - 0.25;
+                        const im2 = im * im;
+                        for (let px = 0; px < rw; px++) {
+                            const re = xCoords[px];
+
+                            // Analytic tests for the main cardioid and period-2 bulb.
+                            // These regions are interior and need no escape-time iterations.
+                            const xm = re - 0.25;
+                            const q = xm * xm + im2;
+                            const inCardioid = q * (q + xm) <= 0.25 * im2;
+                            const dx = re + 1;
+                            const inBulb = dx * dx + im2 <= 0.0625;
+
+                            let zr = 0, zi = 0;
+                            let zr2 = 0, zi2 = 0;
+                            let iter = 0;
+
+                            if (inCardioid || inBulb) {
+                                iter = passIter;
+                            } else if (deepMode) {
+                                // Perturbation recurrence: z = Z + delta, with Z the
+                                // reference orbit and delta the pixel's coordinate offset.
+                                const dcR = re - refX;
+                                const dcI = im - refY;
+                                let dr = 0, di = 0;
+                                while (iter < passIter) {
+                                    const baseR = refR[iter];
+                                    const baseI = refI[iter];
+                                    const nextDr = 2 * (baseR * dr - baseI * di) + dr * dr - di * di + dcR;
+                                    const nextDi = 2 * (baseR * di + baseI * dr) + 2 * dr * di + dcI;
+                                    dr = nextDr;
+                                    di = nextDi;
+                                    zr = refR[iter + 1] + dr;
+                                    zi = refI[iter + 1] + di;
+                                    zr2 = zr * zr;
+                                    zi2 = zi * zi;
+                                    iter++;
+                                    if (!Number.isFinite(zr2 + zi2) || zr2 + zi2 > 4.0) break;
+                                }
+                            } else {
+                                while (iter < passIter && (zr2 + zi2) <= 4.0) {
+                                    zi = 2 * zr * zi + im;
+                                    zr = zr2 - zi2 + re;
+                                    zr2 = zr * zr;
+                                    zi2 = zi * zi;
+                                    iter++;
+                                }
+                            }
+
+                            let r, g, b;
+                            if (iter === passIter) {
+                                // Interior — deep dark violet for visual depth
+                                r = 4; g = 1; b = 14;
+                            } else if (smoothColoring) {
+                                const log_zn = Math.log(zr2 + zi2) * 0.5;
+                                const nu = Math.log(log_zn / Math.LN2) / Math.LN2;
+                                let smooth = iter + 1 - nu;
+                                if (smooth < 0) smooth = 0;
+                                const t = (smooth * 0.12) % 1.0;
+                                const palIdx = (Math.floor(t * 256) + phaseOffset) % 256;
+                                const pi = palIdx * 3;
+                                r = PALETTE[pi]; g = PALETTE[pi + 1]; b = PALETTE[pi + 2];
+                            } else {
+                                // Banded (non-smooth) coloring
+                                const palIdx = (iter * 7 + phaseOffset) % 256;
+                                const pi = palIdx * 3;
+                                r = PALETTE[pi]; g = PALETTE[pi + 1]; b = PALETTE[pi + 2];
+                            }
+
+                            data[idx]     = r;
+                            data[idx + 1] = g;
+                            data[idx + 2] = b;
+                            data[idx + 3] = 255;
+                            idx += 4;
+                        }
+                    }
+
+                    offCtx.putImageData(imageData, 0, 0);
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'low';
+                    ctx.drawImage(offCanvas, 0, 0, rw, rh, 0, 0, snap.w, snap.h);
+
+                    statusEl.innerHTML = `render <b>${Math.round(scale * 100)}%</b> · iter <b>${iterLimit}</b>`;
+
+                    if (passIndex + 1 < scales.length) {
+                        setTimeout(() => renderPass(passIndex + 1), 0);
+                    } else {
+                        statusEl.innerHTML = deepMode
+                        ? `deep mode · iter <b>${iterLimit}</b> · ×<b>${formatZoom(zoom)}</b>`
+                        : `ready · iter <b>${iterLimit}</b> · ×<b>${formatZoom(zoom)}</b>`;
+                    }
+                }
+
+                renderPass(0);
+            }
+
+            // ---------- UTILITIES ----------
+            function formatZoom(z) {
+                if (z < 1000) return z.toFixed(1);
+                if (z < 1e6) return (z / 1000).toFixed(1) + 'k';
+                if (z < 1e9) return (z / 1e6).toFixed(1) + 'M';
+                return (z / 1e9).toFixed(1) + 'G';
+            }
+
+            let zoomReadoutTimer = null;
+            function showZoomReadout() {
+                zoomReadout.textContent = '×' + formatZoom(zoom);
+                zoomReadout.classList.add('show');
+                if (zoomReadoutTimer) clearTimeout(zoomReadoutTimer);
+                zoomReadoutTimer = setTimeout(() => {
+                    zoomReadout.classList.remove('show');
+                }, 900);
+            }
+
+            function flashScreen() {
+                flashEl.classList.add('on');
+                requestAnimationFrame(() => {
+                    flashEl.classList.remove('on');
+                });
+            }
+
+            // ---------- INTERACTION ----------
+            let zoomDebounceTimer = null;
+            function scheduleZoomReadout() {
+                if (zoomDebounceTimer) clearTimeout(zoomDebounceTimer);
+                zoomDebounceTimer = setTimeout(showZoomReadout, 200);
+            }
+
+            function zoomAt(clientX, clientY, zoomFactor) {
+                const rect = canvas.getBoundingClientRect();
+                const mouseX = (clientX - rect.left) / rect.width;
+                const mouseY = (clientY - rect.top) / rect.height;
+
+                const spanX = maxRe - minRe;
+                const spanY = maxIm - minIm;
+                const worldMouseX = minRe + mouseX * spanX;
+                const worldMouseY = minIm + mouseY * spanY;
+
+                const newZoom = zoom * zoomFactor;
+                if (newZoom < 0.2) return;
+
+                zoom = newZoom;
+                updateBounds();
+
+                const newSpanX = maxRe - minRe;
+                const newSpanY = maxIm - minIm;
+                const newMinRe = worldMouseX - mouseX * newSpanX;
+                const newMinIm = worldMouseY - mouseY * newSpanY;
+                centerX = newMinRe + newSpanX / 2;
+                centerY = newMinIm + newSpanY / 2;
+                updateBounds();
+
+                requestRender();
+                scheduleZoomReadout();
+            }
+
+            function handleWheel(e) {
+                e.preventDefault();
+                markInteraction();
+                const delta = -Math.sign(e.deltaY) * 0.15;
+                zoomAt(e.clientX, e.clientY, Math.exp(delta));
+            }
+
+            function handleMouseDown(e) {
+                isDragging = true;
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+                canvas.style.cursor = 'grabbing';
+            }
+
+            function handleMouseMove(e) {
+                if (!isDragging) return;
+                markInteraction();
+                const dx = e.clientX - lastMouseX;
+                const dy = e.clientY - lastMouseY;
+                lastMouseX = e.clientX;
+                lastMouseY = e.clientY;
+
+                const rect = canvas.getBoundingClientRect();
+                const spanX = maxRe - minRe;
+                const spanY = maxIm - minIm;
+                centerX -= (dx / rect.width) * spanX;
+                centerY -= (dy / rect.height) * spanY;
+
+                updateBounds();
+                requestRender();
+            }
+
+            function handleMouseUp() {
+                isDragging = false;
+                canvas.style.cursor = 'crosshair';
+            }
+
+            // Touch
+            let touchStartDist = 0;
+            let touchStartWorld = { x: 0, y: 0 };
+
+            function handleTouchStart(e) {
+                e.preventDefault();
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    lastMouseX = e.touches[0].clientX;
+                    lastMouseY = e.touches[0].clientY;
+                } else if (e.touches.length === 2) {
+                    isDragging = false;
+                    const t0 = e.touches[0], t1 = e.touches[1];
+                    touchStartDist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+                    const rect = canvas.getBoundingClientRect();
+                    const cx = (t0.clientX + t1.clientX) / 2;
+                    const cy = (t0.clientY + t1.clientY) / 2;
+                    const normX = (cx - rect.left) / rect.width;
+                    const normY = (cy - rect.top) / rect.height;
+                    touchStartWorld.x = minRe + normX * (maxRe - minRe);
+                    touchStartWorld.y = minIm + normY * (maxIm - minIm);
+                }
+            }
+
+            function handleTouchMove(e) {
+                e.preventDefault();
+                markInteraction();
+                if (e.touches.length === 1 && isDragging) {
+                    const t = e.touches[0];
+                    const dx = t.clientX - lastMouseX;
+                    const dy = t.clientY - lastMouseY;
+                    lastMouseX = t.clientX;
+                    lastMouseY = t.clientY;
+                    const rect = canvas.getBoundingClientRect();
+                    const spanX = maxRe - minRe;
+                    const spanY = maxIm - minIm;
+                    centerX -= (dx / rect.width) * spanX;
+                    centerY -= (dy / rect.height) * spanY;
+                    updateBounds();
+                    requestRender();
+                } else if (e.touches.length === 2) {
+                    const t0 = e.touches[0], t1 = e.touches[1];
+                    const dist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+                    if (touchStartDist === 0) return;
+                    const factor = dist / touchStartDist;
+                    const newZoom = zoom * factor;
+                    if (newZoom < 0.2) return;
+                    zoom = newZoom;
+
+                    const rect = canvas.getBoundingClientRect();
+                    const cx = (t0.clientX + t1.clientX) / 2;
+                    const cy = (t0.clientY + t1.clientY) / 2;
+                    const normX = (cx - rect.left) / rect.width;
+                    const normY = (cy - rect.top) / rect.height;
+                    updateBounds();
+                    const newSpanX = maxRe - minRe;
+                    const newSpanY = maxIm - minIm;
+                    const newMinRe = touchStartWorld.x - normX * newSpanX;
+                    const newMinIm = touchStartWorld.y - normY * newSpanY;
+                    centerX = newMinRe + newSpanX / 2;
+                    centerY = newMinIm + newSpanY / 2;
+                    updateBounds();
+
+                    touchStartDist = dist;
+                    touchStartWorld.x = minRe + normX * (maxRe - minRe);
+                    touchStartWorld.y = minIm + normY * (maxIm - minIm);
+                    requestRender();
+                    scheduleZoomReadout();
+                }
+            }
+
+            function handleTouchEnd(e) {
+                e.preventDefault();
+                if (e.touches.length === 0) {
+                    isDragging = false;
+                    touchStartDist = 0;
+                } else if (e.touches.length === 1) {
+                    const t = e.touches[0];
+                    isDragging = true;
+                    lastMouseX = t.clientX;
+                    lastMouseY = t.clientY;
+                    touchStartDist = 0;
+                }
+            }
+
+            // ---------- AUTO ZOOM ----------
+            let autoZoomTimer = null;
+            let lastRenderStartTime = 0;
+
+            const _startRender = startRender;
+            startRender = function() {
+                lastRenderStartTime = performance.now();
+                _startRender();
+            };
+
+            function autoZoomStep() {
+                if (!autoZoom) return;
+
+                const now = performance.now();
+                if (now - lastRenderStartTime < 120) {
+                    autoZoomTimer = setTimeout(autoZoomStep, 100);
+                    return;
+                }
+
+                const newZoom = zoom * Math.exp(AUTO_ZOOM_SPEED);
+                zoom = newZoom;
+                const targetX = -0.743643887037151;
+                const targetY = 0.13182590420533;
+                const blend = 0.008;
+                centerX += (targetX - centerX) * blend;
+                centerY += (targetY - centerY) * blend;
+
+                colorPhase += 0.015;
+                updateBounds();
+                requestRender();
+                scheduleZoomReadout();
+
+                autoZoomTimer = setTimeout(autoZoomStep, 350);
+            }
+
+            function startAutoZoom() {
+                if (autoZoomTimer) clearTimeout(autoZoomTimer);
+                autoZoomTimer = setTimeout(autoZoomStep, 300);
+            }
+
+            function stopAutoZoom() {
+                if (autoZoomTimer) {
+                    clearTimeout(autoZoomTimer);
+                    autoZoomTimer = null;
+                }
+            }
+
+            // ---------- KEYBOARD SHORTCUTS ----------
+            function handleKeyDown(e) {
+                if (e.target.tagName === 'INPUT') return;
+                const key = e.key.toLowerCase();
+                if (key === 'r') {
+                    resetView();
+                } else if (key === 'a') {
+                    toggleAutoZoom();
+                } else if (key === 's') {
+                    saveScreenshot();
+                } else if (key === 'p') {
+                    cyclePalette();
+                } else if (key === ' ' || key === 'spacebar') {
+                    e.preventDefault();
+                    toggleSmooth();
+                }
+            }
+
+            // ---------- ACTIONS ----------
+            function resetView() {
+                centerX = -0.5;
+                centerY = 0.0;
+                zoom = 1.0;
+                updateBounds();
+                requestRender();
+                flashScreen();
+                showZoomReadout();
+            }
+
+            function cyclePalette() {
+                paletteIndex = (paletteIndex + 1) % PALETTES.length;
+                rebuildPalette();
+                requestRender();
+                statusEl.innerHTML = `palette <b>${PALETTE_NAMES[paletteIndex]}</b>`;
+            }
+
+            function toggleSmooth() {
+                smoothColoring = !smoothColoring;
+                document.getElementById('btnSmooth').classList.toggle('active', smoothColoring);
+                requestRender();
+            }
+
+            function saveScreenshot() {
+                // Ensure we capture the fully-rendered canvas
+                canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `mandelbrot_zoom_${formatZoom(zoom)}_${Date.now()}.png`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }, 'image/png');
+                statusEl.innerHTML = 'saved ⤓';
+            }
+
+            function toggleAutoZoom() {
+                autoZoom = !autoZoom;
+                const btn = document.getElementById('toggleBtn');
+                btn.textContent = autoZoom ? '⏸ auto‑zoom' : '▶ auto‑zoom';
+                btn.classList.toggle('active', autoZoom);
+                if (autoZoom) startAutoZoom();
+                else stopAutoZoom();
+            }
+
+            // ---------- FPS COUNTER ----------
+            let frameCount = 0;
+            let lastFpsTime = performance.now();
+            function updateFps() {
+                frameCount++;
+                const now = performance.now();
+                if (now - lastFpsTime >= 1000) {
+                    fpsEl.textContent = frameCount + ' fps';
+                    frameCount = 0;
+                    lastFpsTime = now;
+                }
+                requestAnimationFrame(updateFps);
+            }
+            requestAnimationFrame(updateFps);
+
+            // ---------- INIT ----------
+            function init() {
+                resizeCanvas();
+                centerX = -0.5;
+                centerY = 0.0;
+                zoom = 1.0;
+                updateBounds();
+                requestRender();
+
+                window.addEventListener('resize', resizeCanvas);
+
+                canvas.addEventListener('wheel', handleWheel, { passive: false });
+                canvas.addEventListener('mousedown', handleMouseDown);
+                window.addEventListener('mousemove', handleMouseMove);
+                window.addEventListener('mouseup', handleMouseUp);
+                canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+                canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+                canvas.addEventListener('touchend', handleTouchEnd);
+                canvas.addEventListener('touchcancel', handleTouchEnd);
+                canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+                window.addEventListener('keydown', handleKeyDown);
+
+                document.getElementById('toggleBtn').addEventListener('click', toggleAutoZoom);
+                document.getElementById('btnPalette').addEventListener('click', cyclePalette);
+                document.getElementById('btnReset').addEventListener('click', resetView);
+                document.getElementById('btnScreenshot').addEventListener('click', saveScreenshot);
+                document.getElementById('btnSmooth').addEventListener('click', toggleSmooth);
+
+                const hint = document.getElementById('hint');
+                setTimeout(() => { hint.style.opacity = '0'; }, 9000);
+            }
+
+            init();
+        })();
+    </script>
+</body>
+</html>
