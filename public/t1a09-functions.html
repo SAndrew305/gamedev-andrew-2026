@@ -1,47 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t1a09 - functions</title>
-    <link rel="stylesheet" href="../baseline.css">
-    <script>
-        /**
-         * Returns a string showing the input number added to itself.
-         */
-        function exampleFunction() {
-            const input = parseInt(document.getElementById('text1').value, 10);
-            const sum = input + input;
-            return input + ' + ' + input + ' = ' + sum;
-        }
-    </script>
-</head>
-<body>
-    <main>
-        <h1>t1a09 - functions</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a09 - functions</title>
+        <link rel="stylesheet" href="../baseline.css" />
+        <script>
+            /**
+             * Returns a string showing the input number added to itself.
+             */
+            function exampleFunction() {
+                const input = parseInt(document.getElementById("text1").value, 10);
+                const sum = input + input;
+                return input + " + " + input + " = " + sum;
+            }
+        </script>
+    </head>
+    <body>
+        <main>
+            <h1>t1a09 - functions</h1>
 
-        <p>
-            <a href="https://www.w3schools.com/programming/prog_functions.php">General reference: functions</a>
-        </p>
+            <p>
+                <a href="https://www.w3schools.com/programming/prog_functions.php"
+                    >General reference: functions</a
+                >
+            </p>
 
-        <p>
-            Functions group code so it can be reused. Values can be passed in and results returned.
-        </p>
+            <p>
+                Functions group code so it can be reused. Values can be passed in and results
+                returned.
+            </p>
 
-        <h2>Working example</h2>
-        <input type="text" id="text1" value="8" /><br><br>
+            <h2>Working example</h2>
+            <input type="text" id="text1" value="8" /><br /><br />
 
-        <input type="button" value="Function example" onclick="{
-            document.getElementById('division1').innerHTML = exampleFunction();
-        }" />
+            <input
+                type="button"
+                value="Function example"
+                onclick="
+                    {
+                        document.getElementById('division1').innerHTML = exampleFunction();
+                    }
+                "
+            />
 
-        <div id="division1">...</div>
-    </main>
+            <div id="division1">...</div>
+        </main>
 
-    <p>Last commit: <span id="lastModified"></span></p>
-    <script>
-        // Display the document last modified date.
-        document.getElementById('lastModified').textContent = document.lastModified;
-    </script>
-</body>
+        <p>Last commit: <span id="lastModified"></span></p>
+        <script>
+            // Display the document last modified date.
+            document.getElementById("lastModified").textContent = document.lastModified;
+        </script>
+    </body>
 </html>

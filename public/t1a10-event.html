@@ -1,34 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t1a10 - events</title>
-    <link rel="stylesheet" href="../baseline.css">
-</head>
-<body>
-    <main>
-        <h1>t1a10 - events</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a10 - events</title>
+        <link rel="stylesheet" href="../baseline.css" />
+    </head>
+    <body>
+        <main>
+            <h1>t1a10 - events</h1>
 
-        <p>
-            Demonstrates responding to user events such as clicks and input changes.
-        </p>
+            <p>Demonstrates responding to user events such as clicks and input changes.</p>
 
-        <label for="eventInput">Type something:</label>
-        <input id="eventInput" type="text" value="Hello" /><br><br>
+            <label for="eventInput">Type something:</label>
+            <input id="eventInput" type="text" value="Hello" /><br /><br />
 
-        <input type="button" value="Click me" onclick="{
-            const value = document.getElementById('eventInput').value;
-            document.getElementById('eventOutput').innerHTML = 'Button clicked with value: ' + value;
-        }" /><br><br>
+            <input
+                type="button"
+                value="Click me"
+                onclick="
+                    {
+                        const value = document.getElementById('eventInput').value;
+                        document.getElementById('eventOutput').innerHTML =
+                            'Button clicked with value: ' + value;
+                    }
+                "
+            /><br /><br />
 
-        <div id="eventOutput">...</div>
-    </main>
+            <div id="eventOutput">...</div>
+        </main>
 
-    <p>Last commit: <span id="lastModified"></span></p>
-    <script>
-        // Display the document last modified date.
-        document.getElementById('lastModified').textContent = document.lastModified;
-    </script>
-</body>
+        <p>Last commit: <span id="lastModified"></span></p>
+        <script>
+            // Display the document last modified date.
+            document.getElementById("lastModified").textContent = document.lastModified;
+        </script>
+    </body>
 </html>

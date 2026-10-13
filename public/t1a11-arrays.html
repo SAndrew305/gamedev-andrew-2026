@@ -1,45 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t1a11 - arrays</title>
-    <link rel="stylesheet" href="../baseline.css">
-</head>
-<body>
-    <main>
-        <h1>t1a11 - arrays</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a11 - arrays</title>
+        <link rel="stylesheet" href="../baseline.css" />
+    </head>
+    <body>
+        <main>
+            <h1>t1a11 - arrays</h1>
 
-        <p>
-            <a href="https://www.w3schools.com/programming/prog_arrays.php">Arrays reference</a>
-        </p>
+            <p>
+                <a href="https://www.w3schools.com/programming/prog_arrays.php">Arrays reference</a>
+            </p>
 
-        <h2>Working array example</h2>
+            <h2>Working array example</h2>
 
-        <label for="arrayCount">Maximum array entries to show:</label>
-        <input type="number" id="myText1" value="3" /><br><br>
+            <label for="arrayCount">Maximum array entries to show:</label>
+            <input type="number" id="myText1" value="3" /><br /><br />
 
-        <input type="button" value="Show array entries" onclick="{
-            const maxEntries = parseInt(document.getElementById('myText1').value, 10);
-            const names = ['Fred', 'Mary', 'Liz'];
-            let output = '';
+            <input
+                type="button"
+                value="Show array entries"
+                onclick="
+                    {
+                        const maxEntries = parseInt(document.getElementById('myText1').value, 10);
+                        const names = ['Fred', 'Mary', 'Liz'];
+                        let output = '';
 
-            for (let index = 0; index < maxEntries; index++) {
-                output += 'Loop #: ' + index + ' array entry: ' + names[index] + '<br>';
-            }
+                        for (let index = 0; index < maxEntries; index++) {
+                            output += 'Loop #: ' + index + ' array entry: ' + names[index] + '<br>';
+                        }
 
-            document.getElementById('myDiv1').innerHTML = output;
-        }" /><br>
+                        document.getElementById('myDiv1').innerHTML = output;
+                    }
+                "
+            /><br />
 
-        <div id="myDiv1">...</div>
+            <div id="myDiv1">...</div>
 
-        <!-- Additional array exercises could use numbers instead of strings. -->
-    </main>
+            <!-- Additional array exercises could use numbers instead of strings. -->
+        </main>
 
-    <p>Last commit: <span id="lastModified"></span></p>
-    <script>
-        // Display the document last modified date.
-        document.getElementById('lastModified').textContent = document.lastModified;
-    </script>
-</body>
+        <p>Last commit: <span id="lastModified"></span></p>
+        <script>
+            // Display the document last modified date.
+            document.getElementById("lastModified").textContent = document.lastModified;
+        </script>
+    </body>
 </html>

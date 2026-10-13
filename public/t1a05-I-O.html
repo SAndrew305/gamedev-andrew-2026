@@ -1,47 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t1a05 - input / output</title>
-    <link rel="stylesheet" href="../baseline.css">
-</head>
-<body>
-    <main>
-        <h1>t1a05 - input / output</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a05 - input / output</title>
+        <link rel="stylesheet" href="../baseline.css" />
+    </head>
+    <body>
+        <main>
+            <h1>t1a05 - input / output</h1>
 
-        <p>
-            <a href="https://www.w3schools.com/jsref/prop_html_innerhtml.asp">Reference: innerHTML</a>
-        </p>
+            <p>
+                <a href="https://www.w3schools.com/jsref/prop_html_innerhtml.asp"
+                    >Reference: innerHTML</a
+                >
+            </p>
 
-        <section aria-labelledby="io-example-heading">
-            <h2 id="io-example-heading">Example: JavaScript input and output</h2>
-            <pre>
+            <section aria-labelledby="io-example-heading">
+                <h2 id="io-example-heading">Example: JavaScript input and output</h2>
+                <pre>
 input = document.getElementById('numberInput').value
 document.getElementById('output').innerHTML = input
             </pre>
-        </section>
+            </section>
 
-        <section aria-labelledby="working-example-heading">
-            <h2 id="working-example-heading">Working example</h2>
+            <section aria-labelledby="working-example-heading">
+                <h2 id="working-example-heading">Working example</h2>
 
-            <label for="numberInput">Number:</label>
-            <input id="numberInput" type="number" value="4" /><br><br>
+                <label for="numberInput">Number:</label>
+                <input id="numberInput" type="number" value="4" /><br /><br />
 
-            <input type="button" value="Square number" onclick="{
-                const input = parseFloat(document.getElementById('numberInput').value);
-                const answer = input * input;
-                document.getElementById('output').innerHTML = input + ' squared = ' + answer;
-            }" /><br><br>
+                <input
+                    type="button"
+                    value="Square number"
+                    onclick="
+                        {
+                            const input = parseFloat(document.getElementById('numberInput').value);
+                            const answer = input * input;
+                            document.getElementById('output').innerHTML =
+                                input + ' squared = ' + answer;
+                        }
+                    "
+                /><br /><br />
 
-            <div id="output">...</div>
-        </section>
-    </main>
+                <div id="output">...</div>
+            </section>
+        </main>
 
-    <p>Last commit: <span id="lastModified"></span></p>
-    <script>
-        // Display the document last modified date.
-        document.getElementById('lastModified').textContent = document.lastModified;
-    </script>
-</body>
+        <p>Last commit: <span id="lastModified"></span></p>
+        <script>
+            // Display the document last modified date.
+            document.getElementById("lastModified").textContent = document.lastModified;
+        </script>
+    </body>
 </html>
