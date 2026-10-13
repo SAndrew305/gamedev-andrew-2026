@@ -1,80 +1,66 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>t1a03</title>
-        <style>
-            body {
-                font-family:
-                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-                    sans-serif;
-                color: #000000;
-                line-height: 1.6;
-                margin: 0;
-                padding: 20px;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>t1a03 - forms</title>
+    <link rel="stylesheet" href="../baseline.css">
+</head>
+<body>
+    <main>
+        <h1>t1a03 - forms</h1>
 
-                background-image: linear-gradient(to bottom right, #f0f4f8, #d9e2ec, #bcccdc);
-                background-size: cover;
-                background-attachment: fixed;
-                background-repeat: no-repeat;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>t1a03-forms</h1>
-
-        <!--todo: add form details-->
+        <!-- Demonstrates common HTML form controls. -->
         <form>
-            <input type="text" id="text1" value="fahhh" />
+            <label for="text1">Text input:</label>
+            <input type="text" id="text1" value="Sample text" /><br><br>
 
-            <!--checkboxes--><br />
-            type1<input type="checkbox" /><br />
-            type2<input type="checkbox" /><br />
+            <!-- Checkboxes: multiple options may be selected. -->
+            <fieldset>
+                <legend>Checkboxes</legend>
+                <label><input type="checkbox" /> Option 1</label><br>
+                <label><input type="checkbox" /> Option 2</label><br>
+            </fieldset>
 
-            <!--radio buttons--><br />
-            rad1<input type="radio" name="vomit" value="" /><br />
-            rad2<input type="radio" name="puke" value="" /><br />
+            <!-- Radio buttons sharing the same name form one mutually exclusive group. -->
+            <fieldset>
+                <legend>Radio buttons</legend>
+                <label><input type="radio" name="choice" value="first" /> Choice A</label><br>
+                <label><input type="radio" name="choice" value="second" /> Choice B</label><br>
+            </fieldset>
 
-            <!--misc--><br />
-            hidden:<input type="hidden" /><br />
-            file:<input type="file" /><br />
-            reset:<input type="reset" /><br />
-            submit:<input type="submit" /><br /><br />
+            <!-- Miscellaneous input types. -->
+            <fieldset>
+                <legend>Other controls</legend>
+                <label>Hidden: <input type="hidden" /></label><br>
+                <label>File: <input type="file" /></label><br>
+                <label>Reset: <input type="reset" /></label><br>
+                <label>Submit: <input type="submit" /></label><br><br>
 
-            button:<input
-                type="button"
-                value="press moi"
-                onclick="
-                    {
-                        document.getElementById('area51').value =
-                            'sorry did you expect something exciting to happen?';
-                    }
-                "
-            /><br /><br />
+                <input type="button" value="Press me" onclick="{
+                    document.getElementById('outputArea').value = 'Button clicked.';
+                }" /><br><br>
+            </fieldset>
 
-            <!--textarea-->
-            <textarea id="area51" cols="60" rows="5"></textarea><br /><br />
+            <!-- Text area for multi-line input. -->
+            <textarea id="outputArea" cols="60" rows="5"></textarea><br><br>
 
-            <!--select box-->
-            <select
-                id="illnamethisidselenaCuzWhyNot"
-                size="3"
-                onChange="{
-            document.getElementById('area51').value = 
-            document.getElementById('illnamethisidselenaCuzWhyNot').value
-        }"
-            >
-                <!--option embedded in select-->
-                <option value="optVal1">juan</option>
-                <option value="optVal2">deux ex</option>
-                <option value="optVal3">tree</option>
+            <!-- Select box that updates the text area above. -->
+            <select id="choiceSelect" size="3" onChange="{
+                document.getElementById('outputArea').value =
+                    document.getElementById('choiceSelect').value;
+            }">
+                <option value="Option 1">Option 1</option>
+                <option value="Option 2">Option 2</option>
+                <option value="Option 3">Option 3</option>
             </select>
         </form>
-        <p>Last commit: <span id="lastModified"></span></p>
-    </body>
+    </main>
+
+    <p>Last commit: <span id="lastModified"></span></p>
     <script>
-        // Display the document last modified date
-        document.getElementById("lastModified").textContent = document.lastModified;
+        // Display the document last modified date.
+        document.getElementById('lastModified').textContent = document.lastModified;
     </script>
+</body>
 </html>
