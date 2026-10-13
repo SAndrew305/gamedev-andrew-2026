@@ -1,0 +1,14 @@
+{
+    "name": "gamedev-andrew-2026",
+    "private": true,
+    "scripts": {
+        "format": "prettier --config config/.prettierrc --ignore-path config/.prettierignore --write .",
+        "format:check": "prettier --config config/.prettierrc --ignore-path config/.prettierignore --check .",
+        "lint:html": "htmlhint --config config/.htmlhintrc \"index.html\" \"public/**/*.html\"",
+        "check": "npm run format:check && npm run lint:html"
+    },
+    "devDependencies": {
+        "prettier": "^3.0.0",
+        "htmlhint": "^1.0.0"
+    }
+}
