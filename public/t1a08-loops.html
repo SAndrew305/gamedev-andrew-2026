@@ -1,21 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t1a08</title>
-    <link rel="stylesheet" href="../baseline.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a08</title>
+        <link rel="stylesheet" href="../baseline.css" />
+    </head>
+    <body>
+        <h1>t1a08 - loops</h1>
 
-<h1>t1a08 - loops</h1>
+        <a href="https://www.w3schools.com/programming/prog_loops.php">loops refrence.</a><br />
 
-<a href="https://www.w3schools.com/programming/prog_loops.php">loops refrence.</a><br>
-
-<pre>
+        <pre>
 // example i/o code
 
-for (let l = 0; l <= maxValue; l++)
+for (let l = 0; l &lt;= maxValue; l++)
 /* | starting |   condition  | change of
 */ |   value  |              | counting var
 
@@ -26,14 +25,17 @@ for (let l = 0; l <= maxValue; l++)
 ----------------------------------------------------------------
 </pre>
 
-<b>Example of working code based on the above example:</b><br>
+        <b>Example of working code based on the above example:</b><br />
 
-<!-- Using descriptive loop variable names improves readability. -->
+        <!-- Using descriptive loop variable names improves readability. -->
 
-max loops <input id="num1" type="number" value="0"><br>
-number idk anything about <input id="oddity" type="number" value="0"><br>
+        max loops <input id="num1" type="number" value="0" /><br />
+        number idk anything about <input id="oddity" type="number" value="0" /><br />
 
-<input type="button" value="basic 'for' loop w/ conditions" onClick="{
+        <input
+            type="button"
+            value="basic 'for' loop w/ conditions"
+            onClick="{
     document.getElementById('div1').innerHTML = ''
     let t= ''
     let max= parseInt(document.getElementById('num1').value)
@@ -46,9 +48,13 @@ number idk anything about <input id="oddity" type="number" value="0"><br>
     }
     document.getElementById('div1').innerHTML = t
 
-}"><br>
+}"
+        /><br />
 
-<input type="button" value="even number identifier" onClick="{
+        <input
+            type="button"
+            value="even number identifier"
+            onClick="{
     document.getElementById('div1').innerHTML = ''
     let t = ''
 
@@ -61,29 +67,29 @@ number idk anything about <input id="oddity" type="number" value="0"><br>
         t1='loop number: '+ loop1 +'<br>'
         }
      document.getElementById('div1').innerHTML = t
-}">
+}"
+        />
 
-<!-- ohh, so it wasn't my fault. javascript just reaallly doesn't like single letter variables. -->
-<div id="div1"><font color=red>...</font></div>
+        <!-- ohh, so it wasn't my fault. javascript just reaallly doesn't like single letter variables. -->
+        <div id="div1"><font color="red">...</font></div>
 
+        <br />--------------------------------------------------------------------<br />
 
-<br>--------------------------------------------------------------------<br>
+        Example of other forms of loops - for extra credit. Written in C cuz why not<br />
+        <br />
+        The loop you saw above was a "for" loop. uses a counting variable to track<br />
+        how long the code has run for and when it should stop. it consists of three<br />
+        sections: a starting value, a condition, and a description of how the variable should<br />
+        change each time it loops.<br /><br />
 
-Example of other forms of loops - for extra credit. Written in C cuz why not<br>
-<br>
-The loop you saw above was a "for" loop. uses a counting variable to track<br>
-how long the code has run for and when it should stop. it consists of three<br>
-sections: a starting value, a condition, and a description of how the variable should<br>
-          change each time it loops.<br><br>
+        Now about the other important loop, the "while" loop... <br /><br />
 
-Now about the other important loop, the "while" loop... <br><br>
-
-This is a loop that is to be used when you actually DON'T know how many times a<br>
-excerpt of code should execute. <br>
-Like, for example, keep doing an activity until it is done, not until you reach a<br>
-pre-determined stopping point with a for loop.<br>
---------------------------------------------------------------------
-<pre>
+        This is a loop that is to be used when you actually DON'T know how many times a<br />
+        excerpt of code should execute. <br />
+        Like, for example, keep doing an activity until it is done, not until you reach a<br />
+        pre-determined stopping point with a for loop.<br />
+        --------------------------------------------------------------------
+        <pre>
     // basic while loop in C:
     
     #include &lt;stdio.h&gt;
@@ -99,8 +105,8 @@ pre-determined stopping point with a for loop.<br>
         return 0;
     }
 </pre>
---------------------------------------------------------------------
-<pre>
+        --------------------------------------------------------------------
+        <pre>
     // output:
         0
         1
@@ -108,13 +114,12 @@ pre-determined stopping point with a for loop.<br>
         3
         4
 </pre>
---------------------------------------------------------------------<br>
-This while loop is set to keep outputting the same variable increasing until a condition is met.
-
-Here is a more practical example of the code, in a countdown sequence, that uses<br>
-BOTH variables:<br>
---------------------------------------------------------------------<br>
-<pre>
+        --------------------------------------------------------------------<br />
+        This while loop is set to keep outputting the same variable increasing until a condition is
+        met. Here is a more practical example of the code, in a countdown sequence, that uses<br />
+        BOTH variables:<br />
+        --------------------------------------------------------------------<br />
+        <pre>
     // countdown
     #include &lt;stdio.h&gt;
     #include &lt;time.h&gt;
@@ -153,30 +158,33 @@ BOTH variables:<br>
         return 0;
     }
 </pre>
---------------------------------------------------------------------<br>
-The brother of the while loop is the Do-While loop, which is the same, as the while loop,<br>
-with the exception that the code runs first, and the condition is checked later.<br><br>
+        --------------------------------------------------------------------<br />
+        The brother of the while loop is the Do-While loop, which is the same, as the while loop,<br />
+        with the exception that the code runs first, and the condition is checked later.<br /><br />
 
-It's basically the code equivalent of "Shoot first, ask questions later."<br><br>
+        It's basically the code equivalent of "Shoot first, ask questions later."<br /><br />
 
-I'm not going to bother writing a Do-While loop, but you can find all the information you need <a href="https://www.w3schools.com/programming/prog_loops.php">here.</a><br>
+        I'm not going to bother writing a Do-While loop, but you can find all the information you
+        need <a href="https://www.w3schools.com/programming/prog_loops.php">here.</a><br />
 
---------------------------------------------------------------------<br>
-And then after that, we have a significantly more powerful type of loop called a<br>
-<b>Nested Loop,</b> or in laymans terms, a loop in a loop. <br><br>
+        --------------------------------------------------------------------<br />
+        And then after that, we have a significantly more powerful type of loop called a<br />
+        <b>Nested Loop,</b> or in laymans terms, a loop in a loop. <br /><br />
 
-If we combine all the loops we've learned up to this point, we can combine a for loop with a<br>
-while loop and get this abomination:<br>
---------------------------------------------------------------------<br><pre>
-#include <stdio.h>
+        If we combine all the loops we've learned up to this point, we can combine a for loop with
+        a<br />
+        while loop and get this abomination:<br />
+        --------------------------------------------------------------------<br />
+        <pre>
+#include &lt;stdio.h&gt;
 
 int main()
 {
     int i = 1;
-    while (i <= 2)
+    while (i &lt;= 2)
     {
         // outer while loop
-        for (int j = 1; j <= 2; j++)
+        for (int j = 1; j &lt;= 2; j++)
         {
             // inner for loop
             printf("i = %d, j = %d\n", i, j);
@@ -186,16 +194,17 @@ int main()
     return 0;
 }
 </pre>
---------------------------------------------------------------------<br>
-It's important to know that there are many types of nested loops. The nested loop above is called a
-hybrid loop, simply because it contains a for loop and a while loop. That means that there are other nested
-loops called
-<ul>
-    <li> Nested "for" loops;</li>
-    <li> Nested "while" loops;</li>
-    <li> Nested "do-while" loops; and of course</li>
-    <li> Nested hybrid loops</li>
-</ul>
-Anyway, that's that. This is probably the most effort I've put into an assignment so far in this class.
-</body>
+        --------------------------------------------------------------------<br />
+        It's important to know that there are many types of nested loops. The nested loop above is
+        called a hybrid loop, simply because it contains a for loop and a while loop. That means
+        that there are other nested loops called
+        <ul>
+            <li>Nested "for" loops;</li>
+            <li>Nested "while" loops;</li>
+            <li>Nested "do-while" loops; and of course</li>
+            <li>Nested hybrid loops</li>
+        </ul>
+        Anyway, that's that. This is probably the most effort I've put into an assignment so far in
+        this class.
+    </body>
 </html>
