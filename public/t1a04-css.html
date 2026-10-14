@@ -6,11 +6,64 @@
         <title>t1a04 - css</title>
         <link rel="stylesheet" href="../baseline.css" />
         <style>
-            /* Page-specific example styles */
-            .example-box {
+            /* Page-specific examples and teaching surfaces. */
+            .code-sample {
                 border: 1px solid #000000;
+                border-radius: 0.5rem;
                 padding: 0.75rem;
                 margin-top: 1rem;
+            }
+
+            .code-sample {
+                background-color: #f7f9fc;
+                overflow-x: auto;
+                font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+                font-size: 0.95rem;
+                white-space: pre;
+            }
+
+            .cascade-demo {
+                color: #1f6f43;
+                transition: color 0.3s ease;
+            }
+
+            .formatting-demo b,
+            .formatting-demo strong {
+                color: #1f3864;
+            }
+
+            .formatting-demo i,
+            .formatting-demo em {
+                color: #5a3e85;
+            }
+
+            .selectors-demo a {
+                color: #0053a6;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+            .selectors-demo a:hover,
+            .selectors-demo a:focus-visible {
+                color: #7b2cbf;
+                text-decoration: underline;
+                outline: 2px solid #7b2cbf;
+                outline-offset: 0.125rem;
+            }
+
+            .box-model-demo {
+                box-sizing: border-box;
+                width: min(100%, 20rem);
+                margin: 1rem auto;
+                padding: 1rem;
+                border: 0.25rem solid #1f3864;
+                background-color: #eaf1fb;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .cascade-demo {
+                    transition: none;
+                }
             }
         </style>
     </head>
@@ -23,30 +76,119 @@
             </p>
 
             <p>
-                This page is intentionally comment-heavy because it explains how CSS is applied. See
-                the raw source for the full set of examples.
+                External stylesheets, in-document <code>&lt;style&gt;</code> blocks, and inline
+                styles all contribute to the final look of a page. Inline styles usually win, with
+                important exceptions for <code>!important</code> and specificity.
             </p>
 
-            <!-- External stylesheets have the lowest specificity of the three common methods,
-             followed by in-document <style>, then inline styles. -->
-            <pre class="example-box">
-b {
-    color: #00ff00;
+            <section aria-labelledby="applying-css-heading">
+                <h2 id="applying-css-heading">Applying CSS</h2>
+
+                <p class="cascade-demo" id="cascadeDemo">
+                    This paragraph starts green because of a class rule.
+                </p>
+
+                <button type="button" id="cascadeToggle">Apply an inline override</button>
+                <p id="cascadeStatus">Current color: class rule.</p>
+
+                <pre class="code-sample"><code>.cascade-demo {
+    color: #1f6f43;
 }
-        </pre>
 
-            <!-- Useful text-formatting tags -->
-            <!--
-            <b>   - bold
-            <i>   - italic
-            <u>   - underline
-        -->
+/* Inline styles normally override this class rule. */
+element.style {
+    color: #b1005a;
+}</code></pre>
+            </section>
 
-            <p>See the repository notes for a deeper CSS refresher.</p>
+            <section aria-labelledby="text-formatting-heading">
+                <h2 id="text-formatting-heading">Text formatting tags</h2>
+
+                <p class="formatting-demo">
+                    <b>Bold</b>, <strong>strong</strong>, <i>italic</i>, <em>emphasis</em>,
+                    <u>underline</u>, <mark>marked</mark>, and <code>code</code> text all have
+                    different purposes. Choose the tag that matches the meaning, not only the
+                    appearance.
+                </p>
+
+                <pre class="code-sample"><code>&lt;p&gt;
+    &lt;b&gt;Bold&lt;/b&gt; and &lt;i&gt;italic&lt;/i&gt; text
+&lt;/p&gt;</code></pre>
+            </section>
+
+            <section aria-labelledby="selectors-heading">
+                <h2 id="selectors-heading">Selectors and states</h2>
+
+                <p class="selectors-demo">
+                    Try hovering or focusing this link:
+                    <a href="https://www.w3schools.com/cssref/default.asp">CSS reference</a>
+                </p>
+
+                <pre class="code-sample"><code>.selectors-demo a:hover,
+.selectors-demo a:focus-visible {
+    color: #7b2cbf;
+    text-decoration: underline;
+}</code></pre>
+            </section>
+
+            <section aria-labelledby="box-model-heading">
+                <h2 id="box-model-heading">The box model</h2>
+
+                <div class="box-model-demo">
+                    Margin, border, padding, and content all affect the space an element uses.
+                </div>
+
+                <pre class="code-sample"><code>.box-model-demo {
+    margin: 1rem auto;
+    padding: 1rem;
+    border: 0.25rem solid #1f3864;
+    box-sizing: border-box;
+}</code></pre>
+            </section>
+
+            <section aria-labelledby="css-refresher-heading">
+                <h2 id="css-refresher-heading">CSS refresher</h2>
+
+                <ul>
+                    <li>
+                        Cascade order: external stylesheet, then in-document style, then inline
+                        style.
+                    </li>
+                    <li>More specific selectors usually win over less specific ones.</li>
+                    <li>
+                        Use <code>rem</code> for scalable spacing and <code>px</code> for precise
+                        borders.
+                    </li>
+                    <li>
+                        Use <code>box-sizing: border-box</code> to make width calculations
+                        predictable.
+                    </li>
+                    <li>Respect <code>prefers-reduced-motion</code> when adding transitions.</li>
+                </ul>
+            </section>
+
+            <p><a href="../index.html">Back to assignment index</a></p>
         </main>
 
         <p>Last commit: <span id="lastModified"></span></p>
         <script>
+            // Toggle an inline style to demonstrate CSS precedence.
+            const cascadeDemo = document.getElementById("cascadeDemo");
+            const cascadeToggle = document.getElementById("cascadeToggle");
+            const cascadeStatus = document.getElementById("cascadeStatus");
+
+            cascadeToggle.addEventListener("click", () => {
+                if (cascadeDemo.style.color) {
+                    cascadeDemo.style.color = "";
+                    cascadeToggle.textContent = "Apply an inline override";
+                    cascadeStatus.textContent = "Current color: class rule.";
+                } else {
+                    cascadeDemo.style.color = "#b1005a";
+                    cascadeToggle.textContent = "Remove the inline override";
+                    cascadeStatus.textContent = "Current color: inline style.";
+                }
+            });
+
             // Display the document last modified date.
             document.getElementById("lastModified").textContent = document.lastModified;
         </script>
