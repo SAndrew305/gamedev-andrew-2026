@@ -1,66 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t1a03 - forms</title>
-    <link rel="stylesheet" href="../baseline.css">
-</head>
-<body>
-    <main>
-        <h1>t1a03 - forms</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a03 - forms</title>
+        <link rel="stylesheet" href="../baseline.css" />
+    </head>
+    <body>
+        <main>
+            <h1>t1a03 - forms</h1>
 
-        <!-- Demonstrates common HTML form controls. -->
-        <form>
-            <label for="text1">Text input:</label>
-            <input type="text" id="text1" value="Sample text" /><br><br>
+            <!-- Demonstrates common HTML form controls. -->
+            <form>
+                <label for="text1">Text input:</label>
+                <input type="text" id="text1" value="Sample text" /><br /><br />
 
-            <!-- Checkboxes: multiple options may be selected. -->
-            <fieldset>
-                <legend>Checkboxes</legend>
-                <label><input type="checkbox" /> Option 1</label><br>
-                <label><input type="checkbox" /> Option 2</label><br>
-            </fieldset>
+                <!-- Checkboxes: multiple options may be selected. -->
+                <fieldset>
+                    <legend>Checkboxes</legend>
+                    <label><input type="checkbox" /> Option 1</label><br />
+                    <label><input type="checkbox" /> Option 2</label><br />
+                </fieldset>
 
-            <!-- Radio buttons sharing the same name form one mutually exclusive group. -->
-            <fieldset>
-                <legend>Radio buttons</legend>
-                <label><input type="radio" name="choice" value="first" /> Choice A</label><br>
-                <label><input type="radio" name="choice" value="second" /> Choice B</label><br>
-            </fieldset>
+                <!-- Radio buttons sharing the same name form one mutually exclusive group. -->
+                <fieldset>
+                    <legend>Radio buttons</legend>
+                    <label><input type="radio" name="choice" value="first" /> Choice A</label><br />
+                    <label><input type="radio" name="choice" value="second" /> Choice B</label
+                    ><br />
+                </fieldset>
 
-            <!-- Miscellaneous input types. -->
-            <fieldset>
-                <legend>Other controls</legend>
-                <label>Hidden: <input type="hidden" /></label><br>
-                <label>File: <input type="file" /></label><br>
-                <label>Reset: <input type="reset" /></label><br>
-                <label>Submit: <input type="submit" /></label><br><br>
+                <!-- Miscellaneous input types. -->
+                <fieldset>
+                    <legend>Other controls</legend>
+                    <label>Hidden: <input type="hidden" /></label><br />
+                    <label>File: <input type="file" /></label><br />
+                    <label>Reset: <input type="reset" /></label><br />
+                    <label>Submit: <input type="submit" /></label><br /><br />
 
-                <input type="button" value="Press me" onclick="{
-                    document.getElementById('outputArea').value = 'Button clicked.';
-                }" /><br><br>
-            </fieldset>
+                    <input
+                        type="button"
+                        value="Press me"
+                        onclick="
+                            {
+                                document.getElementById('outputArea').value = 'Button clicked.';
+                            }
+                        "
+                    /><br /><br />
+                </fieldset>
 
-            <!-- Text area for multi-line input. -->
-            <textarea id="outputArea" cols="60" rows="5"></textarea><br><br>
+                <!-- Text area for multi-line input. -->
+                <textarea id="outputArea" cols="60" rows="5"></textarea><br /><br />
 
-            <!-- Select box that updates the text area above. -->
-            <select id="choiceSelect" size="3" onChange="{
+                <!-- Select box that updates the text area above. -->
+                <select
+                    id="choiceSelect"
+                    size="3"
+                    onChange="{
                 document.getElementById('outputArea').value =
                     document.getElementById('choiceSelect').value;
-            }">
-                <option value="Option 1">Option 1</option>
-                <option value="Option 2">Option 2</option>
-                <option value="Option 3">Option 3</option>
-            </select>
-        </form>
-    </main>
+            }"
+                >
+                    <option value="Option 1">Option 1</option>
+                    <option value="Option 2">Option 2</option>
+                    <option value="Option 3">Option 3</option>
+                </select>
+            </form>
+        </main>
 
-    <p>Last commit: <span id="lastModified"></span></p>
-    <script>
-        // Display the document last modified date.
-        document.getElementById('lastModified').textContent = document.lastModified;
-    </script>
-</body>
+        <p>Last commit: <span id="lastModified"></span></p>
+        <script>
+            // Display the document last modified date.
+            document.getElementById("lastModified").textContent = document.lastModified;
+        </script>
+    </body>
 </html>

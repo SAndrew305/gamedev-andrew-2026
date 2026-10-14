@@ -1,53 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>t1a07 - conditions</title>
-    <link rel="stylesheet" href="../baseline.css">
-</head>
-<body>
-    <main>
-        <h1>t1a07 - conditions / decisions</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a07 - conditions</title>
+        <link rel="stylesheet" href="../baseline.css" />
+    </head>
+    <body>
+        <main>
+            <h1>t1a07 - conditions / decisions</h1>
 
-        <label for="numberInput">Number:</label>
-        <input id="numberInput" type="number" value="4" /><br><br>
+            <label for="numberInput">Number:</label>
+            <input id="numberInput" type="number" value="4" /><br /><br />
 
-        <!-- Simple if statement -->
-        <input type="button" value="Simple if statement" onclick="{
-            const value = parseFloat(document.getElementById('numberInput').value);
-            if (value >= 3) {
-                document.getElementById('result').innerHTML = value + ' is greater than or equal to 3';
-            }
-        }" /><br>
+            <!-- Simple if statement -->
+            <input
+                type="button"
+                value="Simple if statement"
+                onclick="
+                    {
+                        const value = parseFloat(document.getElementById('numberInput').value);
+                        if (value >= 3) {
+                            document.getElementById('result').innerHTML =
+                                value + ' is greater than or equal to 3';
+                        }
+                    }
+                "
+            /><br />
 
-        <!-- if / else statement -->
-        <input type="button" value="if...else" onclick="{
-            const value = parseFloat(document.getElementById('numberInput').value);
-            if (value >= 3) {
-                document.getElementById('result').innerHTML = value + ' is greater than or equal to 3';
-            } else {
-                document.getElementById('result').innerHTML = value + ' is less than 3';
-            }
-        }" /><br>
+            <!-- if / else statement -->
+            <input
+                type="button"
+                value="if...else"
+                onclick="
+                    {
+                        const value = parseFloat(document.getElementById('numberInput').value);
+                        if (value >= 3) {
+                            document.getElementById('result').innerHTML =
+                                value + ' is greater than or equal to 3';
+                        } else {
+                            document.getElementById('result').innerHTML = value + ' is less than 3';
+                        }
+                    }
+                "
+            /><br />
 
-        <!-- Complex condition using logical operators -->
-        <input type="button" value="Complex if" onclick="{
-            const value = parseFloat(document.getElementById('numberInput').value);
-            if ((value !== 3 || value > -3) && value <= 100) {
-                document.getElementById('result').innerHTML = value + ' matches the complex condition';
-            } else {
-                document.getElementById('result').innerHTML = value + ' does not match the complex condition';
-            }
-        }" /><br><br>
+            <!-- Complex condition using logical operators -->
+            <input
+                type="button"
+                value="Complex if"
+                onclick="
+                    {
+                        const value = parseFloat(document.getElementById('numberInput').value);
+                        if ((value !== 3 || value > -3) && value <= 100) {
+                            document.getElementById('result').innerHTML =
+                                value + ' matches the complex condition';
+                        } else {
+                            document.getElementById('result').innerHTML =
+                                value + ' does not match the complex condition';
+                        }
+                    }
+                "
+            /><br /><br />
 
-        <div id="result">...</div>
-    </main>
+            <div id="result">...</div>
+        </main>
 
-    <p>Last commit: <span id="lastModified"></span></p>
-    <script>
-        // Display the document last modified date.
-        document.getElementById('lastModified').textContent = document.lastModified;
-    </script>
-</body>
+        <p>Last commit: <span id="lastModified"></span></p>
+        <script>
+            // Display the document last modified date.
+            document.getElementById("lastModified").textContent = document.lastModified;
+        </script>
+    </body>
 </html>
