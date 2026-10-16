@@ -9,64 +9,62 @@
     <body>
         <main>
             <h1>t1a07 - conditions / decisions</h1>
+            <p>
+                Conditionals let a program make decisions. This page demonstrates a simple
+                <code>if</code>, an <code>if / else</code> branch, and a complex condition combining
+                logical operators. Enter a number and click a button to see the result.
+            </p>
 
             <label for="numberInput">Number:</label>
             <input id="numberInput" type="number" value="4" /><br /><br />
 
             <!-- Simple if statement -->
-            <input
-                type="button"
-                value="Simple if statement"
-                onclick="
-                    {
-                        const value = parseFloat(document.getElementById('numberInput').value);
-                        if (value >= 3) {
-                            document.getElementById('result').innerHTML =
-                                value + ' is greater than or equal to 3';
-                        }
-                    }
-                "
-            /><br />
+            <input type="button" value="Simple if statement" id="btnSimpleIf" /><br />
 
             <!-- if / else statement -->
-            <input
-                type="button"
-                value="if...else"
-                onclick="
-                    {
-                        const value = parseFloat(document.getElementById('numberInput').value);
-                        if (value >= 3) {
-                            document.getElementById('result').innerHTML =
-                                value + ' is greater than or equal to 3';
-                        } else {
-                            document.getElementById('result').innerHTML = value + ' is less than 3';
-                        }
-                    }
-                "
-            /><br />
+            <input type="button" value="if...else" id="btnIfElse" /><br />
 
             <!-- Complex condition using logical operators -->
-            <input
-                type="button"
-                value="Complex if"
-                onclick="
-                    {
-                        const value = parseFloat(document.getElementById('numberInput').value);
-                        if ((value !== 3 || value > -3) && value <= 100) {
-                            document.getElementById('result').innerHTML =
-                                value + ' matches the complex condition';
-                        } else {
-                            document.getElementById('result').innerHTML =
-                                value + ' does not match the complex condition';
-                        }
-                    }
-                "
-            /><br /><br />
+            <input type="button" value="Complex if" id="btnComplexIf" /><br /><br />
 
             <div id="result">...</div>
         </main>
 
-        <p>Last commit: <span id="lastModified"></span></p>
+        <p>Last updated: <span id="lastModified"></span></p>
+        <script>
+            function getValue() {
+                return parseFloat(document.getElementById("numberInput").value);
+            }
+            function show(message) {
+                document.getElementById("result").innerHTML = message;
+            }
+
+            document.getElementById("btnSimpleIf").addEventListener("click", function () {
+                var value = getValue();
+                if (value >= 3) {
+                    show(value + " is greater than or equal to 3");
+                }
+            });
+
+            document.getElementById("btnIfElse").addEventListener("click", function () {
+                var value = getValue();
+                if (value >= 3) {
+                    show(value + " is greater than or equal to 3");
+                } else {
+                    show(value + " is less than 3");
+                }
+            });
+
+            document.getElementById("btnComplexIf").addEventListener("click", function () {
+                var value = getValue();
+                if ((value !== 3 || value > -3) && value <= 100) {
+                    show(value + " matches the complex condition");
+                } else {
+                    show(value + " does not match the complex condition");
+                }
+            });
+        </script>
+        <script src="../theme.js" defer></script>
         <script>
             // Display the document last modified date.
             document.getElementById("lastModified").textContent = document.lastModified;

@@ -4,47 +4,31 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>t1a06 - proper + variables</title>
+        <link rel="stylesheet" href="../baseline.css" />
+        <script src="../theme.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <h1>t1a06 - variables</h1>
+            <p>
+                Variables store values so they can be reused. This example declares a number, some
+                text, a decimal, and a boolean, then combines them into one string. It also shows
+                the difference between declaring variables properly and reusing them.
+            </p>
+            <p><strong>Bold text</strong></p>
 
-        <style>
-            body {
-                font-family:
-                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-                    sans-serif;
-                line-height: 1.6;
-                margin: 0;
-                padding: 20px;
+            <button type="button" id="helloBtn">Click this</button>
+            <div id="variableOutput">...</div>
+        </main>
 
-                color: #000000;
-                transition: color 2s ease-in-out;
-            }
-
-            /* Dark-mode overlay */
-            body::after {
-                content: "";
-                position: fixed;
-                inset: 0;
-                z-index: -1;
-                background: linear-gradient(to bottom right, #37383a, #1e1f20, #5b636b);
-                opacity: 0;
-                transition: opacity 1s ease-in-out;
-            }
-
-            body.dark {
-                color: #ffffff;
-            }
-
-            body.dark::after {
-                opacity: 1;
-            }
-        </style>
-
+        <p>Last updated: <span id="lastModified"></span></p>
         <script>
             function speakHello() {
-                const number = 3;
-                const text = " Hello ";
-                const decimal = 17.5;
-                const isReady = true;
-                const output = document.getElementById("variableOutput");
+                var number = 3;
+                var text = " Hello ";
+                var decimal = 17.5;
+                var isReady = true;
+                var output = document.getElementById("variableOutput");
 
                 output.innerHTML = number + text + decimal + ", " + isReady;
                 if (isReady) {
@@ -52,23 +36,8 @@
                 }
             }
 
-            function shiftBackground() {
-                document.body.classList.add("dark");
-            }
+            document.getElementById("helloBtn").addEventListener("click", speakHello);
         </script>
-    </head>
-    <body>
-        <main>
-            <h1>t1a06 - variables</h1>
-            <p><strong>Bold text</strong></p>
-
-            <button onclick="speakHello()">Click this</button>
-            <div id="variableOutput">...</div>
-
-            <button onclick="shiftBackground()" id="pressMe">Dark mode</button>
-        </main>
-
-        <p>Last commit: <span id="lastModified"></span></p>
         <script>
             // Display the document last modified date.
             document.getElementById("lastModified").textContent = document.lastModified;

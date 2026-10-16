@@ -19,30 +19,28 @@
             <label for="arrayCount">Maximum array entries to show:</label>
             <input type="number" id="myText1" value="3" /><br /><br />
 
-            <input
-                type="button"
-                value="Show array entries"
-                onclick="
-                    {
-                        const maxEntries = parseInt(document.getElementById('myText1').value, 10);
-                        const names = ['Fred', 'Mary', 'Liz'];
-                        let output = '';
-
-                        for (let index = 0; index < maxEntries; index++) {
-                            output += 'Loop #: ' + index + ' array entry: ' + names[index] + '<br>';
-                        }
-
-                        document.getElementById('myDiv1').innerHTML = output;
-                    }
-                "
-            /><br />
+            <input type="button" value="Show array entries" id="btnArray" /><br />
 
             <div id="myDiv1">...</div>
 
             <!-- Additional array exercises could use numbers instead of strings. -->
         </main>
 
-        <p>Last commit: <span id="lastModified"></span></p>
+        <p>Last updated: <span id="lastModified"></span></p>
+        <script>
+            document.getElementById("btnArray").addEventListener("click", function () {
+                var maxEntries = parseInt(document.getElementById("myText1").value, 10);
+                var names = ["Fred", "Mary", "Liz"];
+                var output = "";
+
+                for (var index = 0; index < maxEntries; index++) {
+                    output += "Loop #: " + index + " array entry: " + names[index] + "<br>";
+                }
+
+                document.getElementById("myDiv1").innerHTML = output;
+            });
+        </script>
+        <script src="../theme.js" defer></script>
         <script>
             // Display the document last modified date.
             document.getElementById("lastModified").textContent = document.lastModified;

@@ -9,6 +9,11 @@
     <body>
         <main>
             <h1>t1a05 - input / output</h1>
+            <p>
+                Input/output lets a program read values from the page and show results back to the
+                user. This page reads a number from an input field, squares it with JavaScript, and
+                writes the answer into the page using <code>innerHTML</code>.
+            </p>
 
             <p>
                 <a href="https://www.w3schools.com/jsref/prop_html_innerhtml.asp"
@@ -30,24 +35,21 @@ document.getElementById('output').innerHTML = input
                 <label for="numberInput">Number:</label>
                 <input id="numberInput" type="number" value="4" /><br /><br />
 
-                <input
-                    type="button"
-                    value="Square number"
-                    onclick="
-                        {
-                            const input = parseFloat(document.getElementById('numberInput').value);
-                            const answer = input * input;
-                            document.getElementById('output').innerHTML =
-                                input + ' squared = ' + answer;
-                        }
-                    "
-                /><br /><br />
+                <input type="button" value="Square number" id="squareBtn" /><br /><br />
 
                 <div id="output">...</div>
             </section>
         </main>
 
-        <p>Last commit: <span id="lastModified"></span></p>
+        <p>Last updated: <span id="lastModified"></span></p>
+        <script>
+            document.getElementById("squareBtn").addEventListener("click", function () {
+                var input = parseFloat(document.getElementById("numberInput").value);
+                var answer = input * input;
+                document.getElementById("output").innerHTML = input + " squared = " + answer;
+            });
+        </script>
+        <script src="../theme.js" defer></script>
         <script>
             // Display the document last modified date.
             document.getElementById("lastModified").textContent = document.lastModified;

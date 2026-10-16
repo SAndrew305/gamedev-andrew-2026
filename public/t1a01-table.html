@@ -9,7 +9,11 @@
     <body>
         <main>
             <h1>t1a01 - tables</h1>
-            <p>A simple reminder of how HTML tables work.</p>
+            <p>
+                HTML tables organise data into rows and columns. This page shows a basic table with
+                a header row and two data rows, using <code>&lt;thead&gt;</code>,
+                <code>&lt;tbody&gt;</code>, and scoped header cells.
+            </p>
 
             <table border="1">
                 <caption>
@@ -40,7 +44,8 @@
             </table>
         </main>
 
-        <p>Last commit: <span id="lastModified"></span></p>
+        <p>Last updated: <span id="lastModified"></span></p>
+        <script src="../theme.js" defer></script>
         <script>
             // Display the document last modified date.
             document.getElementById("lastModified").textContent = document.lastModified;

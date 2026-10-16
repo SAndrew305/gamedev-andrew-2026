@@ -9,6 +9,11 @@
     <body>
         <main>
             <h1>t1a03 - forms</h1>
+            <p>
+                HTML forms collect user input. This page demonstrates text inputs, checkboxes, radio
+                buttons, hidden/file/reset/submit controls, a textarea, and a select box. Try the
+                controls below to see how JavaScript reads and writes their values.
+            </p>
 
             <!-- Demonstrates common HTML form controls. -->
             <form>
@@ -53,14 +58,7 @@
                 <textarea id="outputArea" cols="60" rows="5"></textarea><br /><br />
 
                 <!-- Select box that updates the text area above. -->
-                <select
-                    id="choiceSelect"
-                    size="3"
-                    onChange="{
-                document.getElementById('outputArea').value =
-                    document.getElementById('choiceSelect').value;
-            }"
-                >
+                <select id="choiceSelect" size="3">
                     <option value="Option 1">Option 1</option>
                     <option value="Option 2">Option 2</option>
                     <option value="Option 3">Option 3</option>
@@ -68,7 +66,16 @@
             </form>
         </main>
 
-        <p>Last commit: <span id="lastModified"></span></p>
+        <p>Last updated: <span id="lastModified"></span></p>
+        <script>
+            document.getElementById("pressMe").addEventListener("click", function () {
+                document.getElementById("outputArea").value = "Button clicked.";
+            });
+            document.getElementById("choiceSelect").addEventListener("change", function () {
+                document.getElementById("outputArea").value = this.value;
+            });
+        </script>
+        <script src="../theme.js" defer></script>
         <script>
             // Display the document last modified date.
             document.getElementById("lastModified").textContent = document.lastModified;

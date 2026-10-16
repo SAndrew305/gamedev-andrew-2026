@@ -9,6 +9,11 @@
     <body>
         <main>
             <h1>t1a02 - lists</h1>
+            <p>
+                HTML lists group related items. Unordered lists (<code>&lt;ul&gt;</code>) use bullet
+                points; ordered lists (<code>&lt;ol&gt;</code>) use numbers. This page shows both,
+                plus a table mixing links and image placeholders.
+            </p>
 
             <section aria-labelledby="unordered-list-heading">
                 <h2 id="unordered-list-heading">Unordered list</h2>
@@ -28,7 +33,7 @@
                 </ol>
             </section>
 
-            <table border="1">
+            <table>
                 <caption>
                     Example table containing placeholder links and images
                 </caption>
@@ -47,7 +52,8 @@
             </table>
         </main>
 
-        <p>Last commit: <span id="lastModified"></span></p>
+        <p>Last updated: <span id="lastModified"></span></p>
+        <script src="../theme.js" defer></script>
         <script>
             // Display the document last modified date.
             document.getElementById("lastModified").textContent = document.lastModified;

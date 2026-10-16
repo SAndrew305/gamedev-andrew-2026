@@ -15,22 +15,20 @@
             <label for="eventInput">Type something:</label>
             <input id="eventInput" type="text" value="Hello" /><br /><br />
 
-            <input
-                type="button"
-                value="Click me"
-                onclick="
-                    {
-                        const value = document.getElementById('eventInput').value;
-                        document.getElementById('eventOutput').innerHTML =
-                            'Button clicked with value: ' + value;
-                    }
-                "
-            /><br /><br />
+            <input type="button" value="Click me" id="btnClick" /><br /><br />
 
             <div id="eventOutput">...</div>
         </main>
 
-        <p>Last commit: <span id="lastModified"></span></p>
+        <p>Last updated: <span id="lastModified"></span></p>
+        <script>
+            document.getElementById("btnClick").addEventListener("click", function () {
+                var value = document.getElementById("eventInput").value;
+                document.getElementById("eventOutput").innerHTML =
+                    "Button clicked with value: " + value;
+            });
+        </script>
+        <script src="../theme.js" defer></script>
         <script>
             // Display the document last modified date.
             document.getElementById("lastModified").textContent = document.lastModified;

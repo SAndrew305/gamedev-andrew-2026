@@ -34,20 +34,18 @@
             <h2>Working example</h2>
             <input type="text" id="text1" value="8" /><br /><br />
 
-            <input
-                type="button"
-                value="Function example"
-                onclick="
-                    {
-                        document.getElementById('division1').innerHTML = exampleFunction();
-                    }
-                "
-            />
+            <input type="button" value="Function example" id="btnFunc" />
 
             <div id="division1">...</div>
         </main>
 
-        <p>Last commit: <span id="lastModified"></span></p>
+        <p>Last updated: <span id="lastModified"></span></p>
+        <script>
+            document.getElementById("btnFunc").addEventListener("click", function () {
+                document.getElementById("division1").innerHTML = exampleFunction();
+            });
+        </script>
+        <script src="../theme.js" defer></script>
         <script>
             // Display the document last modified date.
             document.getElementById("lastModified").textContent = document.lastModified;
