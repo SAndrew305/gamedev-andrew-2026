@@ -45,6 +45,28 @@ for (let l = 0; l &lt;= maxValue; l++)
         <!-- ohh, so it wasn't my fault. javascript just reaallly doesn't like single letter variables. -->
         <div id="div1">...</div>
 
+        <h2>Practical examples</h2>
+
+        <h3>1. Total score</h3>
+        <p>Add up a list of scores using a loop. Enter scores separated by commas.</p>
+        <label for="scoresInput">Scores:</label>
+        <input type="text" id="scoresInput" value="10, 25, 40, 15, 30" /><br /><br />
+        <input type="button" value="Calculate total" id="btnTotalScore" /><br /><br />
+        <div id="totalScoreOutput">...</div>
+
+        <h3>2. High score</h3>
+        <p>Find the highest score in a list by comparing each value as the loop runs.</p>
+        <input type="text" id="highScoresInput" value="10, 25, 40, 15, 30" /><br /><br />
+        <input type="button" value="Find high score" id="btnHighScore" /><br /><br />
+        <div id="highScoreOutput">...</div>
+
+        <h3>3. Multiplication table</h3>
+        <p>Use a nested loop to print a multiplication table up to the number you choose.</p>
+        <label for="tableSizeInput">Table size:</label>
+        <input type="number" id="tableSizeInput" value="5" min="1" /><br /><br />
+        <input type="button" value="Build table" id="btnTable" /><br /><br />
+        <div id="tableOutput">...</div>
+
         <br />--------------------------------------------------------------------<br />
 
         Example of other forms of loops - for extra credit. Written in C cuz why not<br />
@@ -206,6 +228,49 @@ int main()
                     t += "loop number: " + loop1 + "<br>";
                 }
                 document.getElementById("div1").innerHTML = t;
+            });
+
+            document.getElementById("btnTotalScore").addEventListener("click", function () {
+                var raw = document.getElementById("scoresInput").value;
+                var parts = raw.split(",");
+                var total = 0;
+
+                for (var i = 0; i < parts.length; i++) {
+                    total += parseInt(parts[i].trim(), 10) || 0;
+                }
+
+                document.getElementById("totalScoreOutput").innerHTML = "Total: " + total;
+            });
+
+            document.getElementById("btnHighScore").addEventListener("click", function () {
+                var raw = document.getElementById("highScoresInput").value;
+                var parts = raw.split(",");
+                var high = null;
+
+                for (var i = 0; i < parts.length; i++) {
+                    var value = parseInt(parts[i].trim(), 10) || 0;
+                    if (high === null || value > high) {
+                        high = value;
+                    }
+                }
+
+                document.getElementById("highScoreOutput").innerHTML = "High score: " + high;
+            });
+
+            document.getElementById("btnTable").addEventListener("click", function () {
+                var size = parseInt(document.getElementById("tableSizeInput").value, 10) || 1;
+                var t = "<table>";
+
+                for (var row = 1; row <= size; row++) {
+                    t += "<tr>";
+                    for (var col = 1; col <= size; col++) {
+                        t += "<td>" + row * col + "</td>";
+                    }
+                    t += "</tr>";
+                }
+
+                t += "</table>";
+                document.getElementById("tableOutput").innerHTML = t;
             });
         </script>
         <script src="../theme.js" defer></script>
