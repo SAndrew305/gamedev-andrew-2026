@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Mandelbrot · infinite zoom</title>
+        <link rel="stylesheet" href="../baseline.css" />
         <style>
             * {
                 margin: 0;
@@ -17,6 +18,7 @@
                 justify-content: center;
                 min-height: 100vh;
                 overflow: hidden;
+                padding: 0;
                 font-family: system-ui, "Segoe UI", Roboto, sans-serif;
             }
             canvas {
@@ -432,6 +434,8 @@
                         // Reference orbit for the canonical deep-zoom target. The orbit is
                         // computed once per render pass; pixels are evaluated as deltas
                         // around this reference when zoomed in deeply.
+                        const passIter =
+                            passIndex === 0 ? Math.max(32, Math.floor(iterLimit * 0.5)) : iterLimit;
                         const deepMode = snap.zoom >= DEEP_ZOOM_THRESHOLD;
                         const refX = -0.743643887037151;
                         const refY = 0.13182590420533;
@@ -449,9 +453,6 @@
                                 if (rr * rr + ri * ri > 1e100) break;
                             }
                         }
-
-                        const passIter =
-                            passIndex === 0 ? Math.max(32, Math.floor(iterLimit * 0.5)) : iterLimit;
 
                         // Fast bailout check
                         let idx = 0;
@@ -917,5 +918,6 @@
                 init();
             })();
         </script>
+        <script src="../theme.js" defer></script>
     </body>
 </html>
