@@ -12,13 +12,16 @@
             <p>
                 <a href="https://www.w3schools.com/jsref/jsref_obj_object.asp"
                     >Reference to JS objects</a
-                ><br><br>
+                ><br /><br />
                 Objects - Stored named variables
+            </p>
 
-                <h4>Example working Objects code</h4>
-                <p id="Easter Egg">Nothing:</p> <input type="text" id="myText01" value="Useless at the moment">
+            <h4>Example working Objects code</h4>
+            <p id="Easter Egg">Nothing:</p>
+            <input type="text" id="myText01" value="Useless at the moment" />
 
-                <br><br><button onClick="{
+            <br /><br /><button
+                onClick="{
                     let myPerson = {
                         firstName: 'John',
                         lastName: 'Doe',
@@ -27,42 +30,46 @@
                     }
 
                     document.getElementById('myDiv01').innerHTML = myPerson.firstName + ' ' + myPerson.lastName + ' is ' + myPerson.age + ' years old and has ' + myPerson.eyeColor + ' eyes.';
-                }">Example object set n' show</button><br>
-            </p>
+                }"
+            >
+                Example object set n' show</button
+            ><br />
 
-            <div id="myDiv01">...</div><br>
+            <div id="myDiv01">...</div>
+            <br />
 
-            <b>Talking about local and global variables, why would it be the best to declare the object in the script tag?</b><br>
+            <b
+                >Talking about local and global variables, why would it be the
+                best to declare the object in the script tag?</b
+            ><br />
         </main>
 
         <p>Last updated: <span id="lastModified"></span></p>
         <script src="../theme.js" defer></script>
         <script>
-            if (typeof myPerson !== 'undefined') {
-                console.log('myPerson is defined');
+            if (typeof myPerson !== "undefined") {
+                console.log("myPerson is defined");
             } else {
-                console.log('myPerson is not defined');
+                console.log("myPerson is not defined");
             }
 
-            if (typeof myPerson === 'object') {
-                console.log('myPerson is an object');
+            if (typeof myPerson === "object") {
+                console.log("myPerson is an object");
             } else {
-                console.log('myPerson is not an object');
+                console.log("myPerson is not an object");
             }
 
-
-            var myText01 = document.getElementById('myText01');
-            var easterP = document.getElementById('Easter Egg');
+            var myText01 = document.getElementById("myText01");
+            var easterP = document.getElementById("Easter Egg");
 
             function onHover() {
-                if (myText01.value === 'Or is it?') {
-                    easterP.textContent = 'something:';
-                    myText01.value = 'easter egg';
+                if (myText01.value === "Or is it?") {
+                    easterP.textContent = "something:";
+                    myText01.value = "easter egg";
                 }
             }
 
-            easterP.addEventListener('mouseover', onHover);
-
+            easterP.addEventListener("mouseover", onHover);
         </script>
 
         <script>
