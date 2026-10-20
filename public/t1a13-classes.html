@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a13 - classes</title>
+        <link rel="stylesheet" href="../baseline.css" />
+        <script src="../theme.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <h1>t1a13 - classes</h1>
+
+            <p>
+                <a href="https://www.w3schools.com/js/js_classes.asp"
+                    >Reference to JS classes (W3S)</a
+                ><br />
+                <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes"
+                    >Reference to JS classes (MDN)</a
+                ><br /><br />
+
+                Classes: both objects that store variables (called properties)
+                and functions that work on the variables (called methods).<br />
+            </p>
+
+            <h4>Example of a class</h4>
+            Nothing:
+            <input type="text" id="myText01"/><br />
+            <button id="myButton01">Click me</button><br />
+
+
+            <div id="myDiv01">...</div>
+
+            <p>Last updated: <span id="lastModified"></span></p>
+        </main>
+        <script>
+
+            document.getElementById('myButton01').onclick = function () {
+                class myAnimal {
+                    constructor(name, species) {
+                        this.name = name;
+                        this.age = species;
+                    }
+                    myShow() {
+                        document.getElementById('myDiv01').innerHTML =
+                            'My name is ' + this.name + ' and I am ' + this.age + ' years old.';
+                    }
+                }
+
+                myDog = new myAnimal('Fido', 5);
+                myDog.myShow();
+            };
+
+            // Display the document last modified date. DON'T TOUCH THIS. MANDATORY ON ALL PAGES.
+            document.getElementById("lastModified").textContent =
+                document.lastModified;
+        </script>
+    </body>
+</html>
