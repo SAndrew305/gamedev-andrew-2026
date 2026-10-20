@@ -27,14 +27,17 @@
             <h4>Example of a class</h4>
             Nothing:
             <input type="text" id="myText01"/><br />
-            <button id="myButton01">Click me</button><br />
+            <button id="myButton01">Click me</button><br /><br />
 
 
-            <div id="myDiv01">...</div>
-
+            <div id="myDiv01">...</div><br />
+            ----------<br />
+            <div id="myDiv02">...</div><br />
             <p>Last updated: <span id="lastModified"></span></p>
         </main>
         <script>
+
+            let myText01 = document.getElementById('myText01');
 
             document.getElementById('myButton01').onclick = function () {
                 class myAnimal {
@@ -50,6 +53,9 @@
 
                 myDog = new myAnimal('Fido', 5);
                 myDog.myShow();
+
+                document.getElementById('myDiv02').innerHTML =
+                    'Also heres the input of the text box: ' + myText01.value;
             };
 
             // Display the document last modified date. DON'T TOUCH THIS. MANDATORY ON ALL PAGES.
