@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a14 - classes extended</title>
+        <link rel="stylesheet" href="../baseline.css" />
+        <script src="../theme.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <h1>t1a14 - classes extender</h1>
+
+            <p>
+                <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes"
+                    >Reference to JS classes (MDN)</a
+                ><br /><br />
+
+                Classes can be extended. A child class inherits properties and
+                methods from a parent class using the <code>extends</code>
+                keyword, and calls the parent constructor with
+                <code>super()</code>.
+            </p>
+
+            <h4>Parent class: Animal</h4>
+            <p>Base class with a name and a <code>speak()</code> method.</p>
+
+            <h4>Child class: Dog (extends Animal)</h4>
+            <p>
+                Inherits from Animal, adds a breed, and overrides
+                <code>speak()</code>.
+            </p>
+
+            <label for="petName">Pet name:</label>
+            <input type="text" id="petName" value="Fido" /><br /><br />
+
+            <label for="petBreed">Breed:</label>
+            <input type="text" id="petBreed" value="Labrador" /><br /><br />
+
+            <button id="makePet">Create pet</button><br /><br />
+
+            <div id="petOutput">...</div>
+
+            <p>Last updated: <span id="lastModified"></span></p>
+        </main>
+        <script>
+            class Animal {
+                constructor(name) {
+                    this.name = name;
+                }
+
+                speak() {
+                    return this.name + " makes a sound.";
+                }
+            }
+
+            class Dog extends Animal {
+                constructor(name, breed) {
+                    super(name);
+                    this.breed = breed;
+                }
+
+                speak() {
+                    return this.name + " the " + this.breed + " says woof!";
+                }
+            }
+
+            document.getElementById("makePet").onclick = function () {
+                const name = document.getElementById("petName").value;
+                const breed = document.getElementById("petBreed").value;
+
+                const myDog = new Dog(name, breed);
+                document.getElementById("petOutput").innerHTML = myDog.speak();
+            };
+
+            // Display the document last modified date. DON'T TOUCH THIS. MANDATORY ON ALL PAGES.
+            document.getElementById("lastModified").textContent =
+                document.lastModified;
+        </script>
+    </body>
+</html>
