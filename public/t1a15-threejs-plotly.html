@@ -3,95 +3,451 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>t1a15 - threejs</title>
+        <title>t1a15 - threejs + plotly</title>
         <link rel="stylesheet" href="../baseline.css" />
         <script src="../theme.js" defer></script>
+        <style>
+            /* Page-specific layout for the threejs + plotly demo. */
+            #controls {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                gap: 1rem;
+                margin: 1rem 0;
+                padding: 1rem;
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: 0.5rem;
+            }
+
+            .control-group {
+                display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+
+            .control-group label {
+                font-size: 0.9rem;
+                color: var(--color-text);
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .control-group input,
+            .control-group select {
+                flex: 1;
+            }
+
+            .control-group button {
+                margin-top: 0.2rem;
+            }
+
+            #canvas-area {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                margin-top: 1rem;
+                min-height: 400px;
+            }
+
+            #threejs-container,
+            #plotly-container {
+                background: var(--color-surface);
+                border: 1px solid var(--color-border);
+                border-radius: 0.5rem;
+                min-height: 400px;
+            }
+
+            #status {
+                margin-top: 1rem;
+                font-size: 0.9rem;
+                color: var(--color-muted);
+            }
+
+            @media (max-width: 700px) {
+                #canvas-area {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
     </head>
     <body>
         <main>
-            <h1 align="center">t1a15-threejs-plotly-fred.html</h1>
-            <b
-                >Use AI to make both of these much better and to show something
-                interesting</b
-            >
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-            <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+            <h1 align="center">t1a15 — ThreeJS + Plotly</h1>
+            <p align="center">
+                Interactive 3D particles (ThreeJS) and an editable line chart (Plotly).
+                Tweak the inputs below and watch both update live.
+            </p>
 
-            <input
-                type="button"
-                value="Show Plotly"
-                onclick="
-                    {
-                        this.remove();
-                        let myPlotlyDiv = document.createElement('div');
-                        myPlotlyDiv.style.width = '300px';
-                        myPlotlyDiv.style.height = '200px';
-                        document.body.appendChild(myPlotlyDiv);
-                        let mySocketX = [0, 1, 2];
-                        let mySocketY = [0, 2, 1];
-                        Plotly.newPlot(
-                            myPlotlyDiv,
-                            [
-                                {
-                                    x: mySocketX,
-                                    y: mySocketY,
-                                    mode: 'lines+markers',
-                                },
-                            ],
-                            {
-                                margin: { t: 10, b: 20, l: 20, r: 10 },
-                                paper_bgcolor: 'transparent',
-                                plot_bgcolor: 'transparent',
-                            },
-                        );
-                    }
-                "
-            />
+            <!-- Controls -->
+            <section id="controls">
+                <div class="control-group">
+                    <strong>ThreeJS — particle count</strong>
+                    <input
+                        type="number"
+                        id="tj-count"
+                        value="80"
+                        min="1"
+                        max="1000"
+                    />
+                </div>
+                <div class="control-group">
+                    <strong>ThreeJS — color</strong>
+                    <input type="color" id="tj-color" value="#00ff41" />
+                </div>
+                <div class="control-group">
+                    <strong>ThreeJS — point size</strong>
+                    <input type="number" id="tj-size" value="6" min="1" max="50" />
+                </div>
+                <div class="control-group">
+                    <strong>ThreeJS — move speed</strong>
+                    <input
+                        type="range"
+                        id="tj-speed"
+                        min="0"
+                        max="10"
+                        step="0.1"
+                        value="2"
+                    />
+                </div>
+                <div class="control-group">
+                    <strong>ThreeJS — reset camera</strong>
+                    <button id="tj-reset">Reset view</button>
+                </div>
 
-            <input
-                type="button"
-                value="Show ThreeJS"
-                onclick="
-                    {
-                        this.remove();
-                        let myScene = new THREE.Scene();
-                        let myCamera = new THREE.PerspectiveCamera(
-                            75,
-                            1,
-                            0.1,
-                            1000,
-                        );
-                        let myRenderer = new THREE.WebGLRenderer();
-                        myRenderer.setSize(200, 200);
-                        document.body.appendChild(myRenderer.domElement);
+                <div class="control-group">
+                    <strong>Plotly — X values</strong>
+                    <input
+                        type="text"
+                        id="pl-x"
+                        value="0,1,2,3,4,5,6,7,8,9"
+                        placeholder="comma separated, e.g. 0,1,2,3"
+                    />
+                </div>
+                <div class="control-group">
+                    <strong>Plotly — Y values</strong>
+                    <input
+                        type="text"
+                        id="pl-y"
+                        value="0,2,1,4,3,5,4,6,5,7"
+                        placeholder="comma separated, e.g. 0,2,1,4"
+                    />
+                </div>
+                <div class="control-group">
+                    <strong>Plotly — trace mode</strong>
+                    <select id="pl-mode">
+                        <option value="lines+markers">lines + markers</option>
+                        <option value="lines">lines only</option>
+                        <option value="markers">markers only</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <strong>Plotly — apply</strong>
+                    <button id="pl-update">Update chart</button>
+                </div>
+            </section>
 
-                        let myPixel = new THREE.Points(
-                            new THREE.BufferGeometry().setAttribute(
-                                'position',
-                                new THREE.Float32BufferAttribute([0, 0, 0], 3),
-                            ),
-                            new THREE.PointsMaterial({
-                                color: 0x00ff00,
-                                size: 8,
-                                sizeAttenuation: false,
-                            }),
-                        );
-                        myScene.add(myPixel);
-                        myCamera.position.z = 5;
+            <!-- Canvases side by side -->
+            <div id="canvas-area">
+                <div id="threejs-container"></div>
+                <div id="plotly-container"></div>
+            </div>
 
-                        async function myRunAnimation() {
-                            myPixel.position.x = (Math.random() - 0.5) * 3;
-                            myPixel.position.y = (Math.random() - 0.5) * 3;
-                            myRenderer.render(myScene, myCamera);
-                            await new Promise((myResolve) =>
-                                setTimeout(myResolve, 100),
-                            );
-                            requestAnimationFrame(myRunAnimation);
-                        }
-                        myRunAnimation();
-                    }
-                "
-            />
+            <div id="status">Ready.</div>
         </main>
+
+        <!-- Libraries -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"
+        ></script>
+        <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+        <script>
+            /* --------------------------------------------------------------
+               Shared helpers
+               -------------------------------------------------------------- */
+            const $ = (id) => document.getElementById(id);
+
+            const status = (msg) => {
+                $("status").textContent = msg;
+            };
+
+            function parseCsvNumbers(input) {
+                return input
+                    .split(",")
+                    .map((s) => parseFloat(s.trim()))
+                    .filter((n) => !isNaN(n));
+            }
+
+            /* --------------------------------------------------------------
+               ThreeJS — interactive particle system
+               -------------------------------------------------------------- */
+            let tjScene, tjCamera, tjRenderer, tjParticles, tjControls, tjPositions;
+
+            function initThreeJS() {
+                const container = $("threejs-container");
+                container.innerHTML = "";
+
+                // Scene & camera
+                tjScene = new THREE.Scene();
+                tjScene.background = new THREE.Color(
+                    getComputedStyle(document.documentElement)
+                        .getPropertyValue("--color-bg")
+                        .trim() || "#141516"
+                );
+
+                tjCamera = new THREE.PerspectiveCamera(
+                    60,
+                    container.clientWidth / container.clientHeight,
+                    0.1,
+                    1000
+                );
+                tjCamera.position.set(0, 0, 12);
+
+                // Renderer
+                tjRenderer = new THREE.WebGLRenderer({ antialias: true });
+                tjRenderer.setSize(container.clientWidth, container.clientHeight);
+                tjRenderer.setPixelRatio(window.devicePixelRatio);
+                container.appendChild(tjRenderer.domElement);
+
+                // OrbitControls — lets the user rotate / zoom / pan the view
+                tjControls = new THREE.OrbitControls(
+                    tjCamera,
+                    tjRenderer.domElement
+                );
+                tjControls.enableDamping = true;
+                tjControls.dampingFactor = 0.05;
+
+                // Reference grid + axes so the 3D space is readable
+                const grid = new THREE.GridHelper(20, 20, 0x444444, 0x222222);
+                const axes = new THREE.AxesHelper(5);
+                tjScene.add(grid, axes);
+
+                // Particle geometry
+                tjPositions = new Float32Array(readCount() * 3);
+                const geometry = new THREE.BufferGeometry();
+                geometry.setAttribute("position", new THREE.BufferAttribute(tjPositions, 3));
+
+                const material = new THREE.PointsMaterial({
+                    color: readColor(),
+                    size: readSize(),
+                    sizeAttenuation: true,
+                });
+
+                tjParticles = new THREE.Points(geometry, material);
+                tjScene.add(tjParticles);
+
+                resetParticles();
+            }
+
+            function readCount() {
+                return Math.min(Math.max(parseInt($("tj-count").value, 10) || 1, 1), 1000);
+            }
+
+            function readColor() {
+                return new THREE.Color($("tj-color").value);
+            }
+
+            function readSize() {
+                return parseFloat($("tj-size").value) || 6;
+            }
+
+            function readSpeed() {
+                return parseFloat($("tj-speed").value) || 2;
+            }
+
+            function resetParticles() {
+                const count = readCount();
+                // Resize buffer if count changed
+                if (tjPositions.length !== count * 3) {
+                    tjPositions = new Float32Array(count * 3);
+                    tjParticles.geometry.setAttribute(
+                        "position",
+                        new THREE.BufferAttribute(tjPositions, 3)
+                    );
+                }
+
+                for (let i = 0; i < count; i++) {
+                    tjPositions[i * 3] = (Math.random() - 0.5) * 12;     // x
+                    tjPositions[i * 3 + 1] = (Math.random() - 0.5) * 12; // y
+                    tjPositions[i * 3 + 2] = (Math.random() - 0.5) * 12; // z
+                }
+
+                tjParticles.geometry.attributes.position.needsUpdate = true;
+                status(`ThreeJS: ${count} particles active. Drag to orbit, scroll to zoom.`);
+            }
+
+            function updateThreeJSParams() {
+                if (!tjParticles) return;
+                tjParticles.material.color = readColor();
+                tjParticles.material.size = readSize();
+            }
+
+            // Animation loop — particles drift slowly in 3D space
+            let tjLastTime = 0;
+            function animateThreeJS(time) {
+                requestAnimationFrame(animateThreeJS);
+
+                const dt = (time - tjLastTime) * 0.001;
+                tjLastTime = time;
+
+                if (tjParticles && tjPositions) {
+                    const speed = readSpeed();
+                    if (speed > 0) {
+                        const count = readCount();
+                        const pos = tjParticles.geometry.attributes.position;
+                        for (let i = 0; i < count; i++) {
+                            // Drift each particle with a little sine wave motion
+                            pos.array[i * 3] +=
+                                Math.sin(time * 0.5 + i) * 0.02 * speed;
+                            pos.array[i * 3 + 1] +=
+                                Math.cos(time * 0.4 + i) * 0.02 * speed;
+                            pos.array[i * 3 + 2] +=
+                                Math.sin(time * 0.3 + i) * 0.02 * speed;
+
+                            // Wrap around so particles stay in view
+                            if (Math.abs(pos.array[i * 3]) > 10)
+                                pos.array[i * 3] *= -1;
+                            if (Math.abs(pos.array[i * 3 + 1]) > 10)
+                                pos.array[i * 3 + 1] *= -1;
+                            if (Math.abs(pos.array[i * 3 + 2]) > 10)
+                                pos.array[i * 3 + 2] *= -1;
+                        }
+                        pos.needsUpdate = true;
+                    }
+
+                    tjControls.update();
+                    tjRenderer.render(tjScene, tjCamera);
+                }
+            }
+
+            function onResizeThreeJS() {
+                if (!tjCamera || !tjRenderer) return;
+                const container = $("threejs-container");
+                tjCamera.aspect = container.clientWidth / container.clientHeight;
+                tjCamera.updateProjectionMatrix();
+                tjRenderer.setSize(container.clientWidth, container.clientHeight);
+            }
+
+            /* --------------------------------------------------------------
+               Plotly — editable line chart
+               -------------------------------------------------------------- */
+            let plPlotDiv;
+
+            function initPlotly() {
+                const container = $("plotly-container");
+                container.innerHTML = "";
+                plPlotDiv = document.createElement("div");
+                plPlotDiv.style.width = "100%";
+                plPlotDiv.style.height = "100%";
+                container.appendChild(plPlotDiv);
+
+                drawPlotly();
+            }
+
+            function drawPlotly() {
+                if (!plPlotDiv) return;
+
+                const x = parseCsvNumbers($("pl-x").value);
+                const y = parseCsvNumbers($("pl-y").value);
+                const mode = $("pl-mode").value;
+
+                // Truncate to the shorter array so x/y line up
+                const len = Math.min(x.length, y.length);
+                const xs = x.slice(0, len);
+                const ys = y.slice(0, len);
+
+                const trace = {
+                    x: xs,
+                    y: ys,
+                    mode: mode,
+                    type: "scatter",
+                    line: { color: getComputedStyle(document.documentElement)
+                        .getPropertyValue("--color-link")
+                        .trim() || "#00ff41", width: 3 },
+                    marker: { size: 8 },
+                };
+
+                const layout = {
+                    margin: { t: 30, b: 40, l: 50, r: 20 },
+                    paper_bgcolor: "transparent",
+                    plot_bgcolor: "transparent",
+                    font: {
+                        color: getComputedStyle(document.documentElement)
+                            .getPropertyValue("--color-text")
+                            .trim() || "#000000",
+                    },
+                    xaxis: {
+                        title: "X",
+                        gridcolor: getComputedStyle(document.documentElement)
+                            .getPropertyValue("--color-border")
+                            .trim() || "#444444",
+                    },
+                    yaxis: {
+                        title: "Y",
+                        gridcolor: getComputedStyle(document.documentElement)
+                            .getPropertyValue("--color-border")
+                            .trim() || "#444444",
+                    },
+                    title: { text: "Editable Plotly Chart", x: 0.5 },
+                };
+
+                Plotly.newPlot(plPlotDiv, [trace], layout, {
+                    responsive: true,
+                    displayModeBar: true,
+                });
+
+                status(`Plotly: plotted ${len} points (mode: ${mode}).`);
+            }
+
+            /* --------------------------------------------------------------
+               Wiring
+               -------------------------------------------------------------- */
+            function init() {
+                initThreeJS();
+                initPlotly();
+
+                // ThreeJS inputs update live
+                $("tj-count").addEventListener("change", resetParticles);
+                $("tj-count").addEventListener("input", resetParticles);
+                $("tj-color").addEventListener("input", updateThreeJSParams);
+                $("tj-size").addEventListener("input", updateThreeJSParams);
+                $("tj-speed").addEventListener("input", () => {
+                    // speed is read inside the loop, nothing else needed
+                });
+                $("tj-reset").addEventListener("click", () => {
+                    tjControls.reset();
+                });
+
+                // Plotly inputs update on demand
+                $("pl-update").addEventListener("click", drawPlotly);
+                // Also update on Enter key in the text inputs
+                [ $("pl-x"), $("pl-y") ].forEach((el) => {
+                    el.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                            drawPlotly();
+                        }
+                    });
+                });
+
+                // Window resize
+                window.addEventListener("resize", () => {
+                    onResizeThreeJS();
+                    if (plPlotDiv) Plotly.Plots.resize(plPlotDiv);
+                });
+
+            // Start animation loop
+            requestAnimationFrame(animateThreeJS);
+            }
+
+            // Run once the DOM is ready
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", init);
+            } else {
+                init();
+            }
+        </script>
     </body>
 </html>
