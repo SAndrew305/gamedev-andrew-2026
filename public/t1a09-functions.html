@@ -9,10 +9,35 @@
             /**
              * Returns a string showing the input number added to itself.
              */
+
+            function obtainValues() {
+                const userValue0 = document.getElementById("text1").value;
+                const userValue1 = parseInt(userValue0, 10);
+                return userValue1;
+            }
+
             function exampleFunction() {
-                const input = parseInt(document.getElementById("text1").value, 10);
-                const sum = input + input;
-                return input + " + " + input + " = " + sum;
+                const input = obtainValues();
+
+                if (isNaN(input)) {
+                    return "Please enter a valid number.";
+                }
+
+                const sumAdd = input + input;
+                const sumHalf = input / 2;
+                const sumSq = input * input;
+                return input + " + " + input + " = " + sumAdd + "<br>" + input + " / " + "2 " + " = " + sumHalf + "<br />"+ input + " squared " + " = " + sumSq;
+            }
+
+            function userRandInt() {
+                const input = obtainValues();
+
+                if (isNaN(input)) {
+                    return "Please enter a valid number.";
+                }
+
+                const randInt = Math.floor(Math.random() * input) + 1;
+                return "Random integer between 1 and " + input + ": " + randInt;
             }
         </script>
     </head>
@@ -31,18 +56,28 @@
                 returned.
             </p>
 
-            <h2>Working example</h2>
-            <input type="text" id="text1" value="8" /><br /><br />
+            <h3>Working example</h3>
+            <input type="text" id="text1" placeholder="Insert number here" /><br /><br />
 
-            <input type="button" value="Function example" id="btnFunc" />
+            <input type="button" value="Function example" id="btnFunc0" />
 
-            <div id="division1">...</div>
+            <div id="division1">...</div><br />
+
+            <h3>
+                Example of function generating randInt between 1 + userValue:
+            </h3>
+
+            <input type="button" value="Function example" id="btnFunc1" />
+            <div id="division2">...</div>
         </main>
 
         <p>Last updated: <span id="lastModified"></span></p>
         <script>
-            document.getElementById("btnFunc").addEventListener("click", function () {
+            document.getElementById("btnFunc0").addEventListener("click", function () {
                 document.getElementById("division1").innerHTML = exampleFunction();
+            });
+            document.getElementById("btnFunc1").addEventListener("click", function () {
+                document.getElementById("division2").innerHTML = userRandInt();
             });
         </script>
         <script src="../theme.js" defer></script>
