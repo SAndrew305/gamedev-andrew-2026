@@ -3,39 +3,35 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>t1a14 - classes extended</title>
+        <title>t1a16 - powerup</title>
         <link rel="stylesheet" href="../baseline.css" />
         <script src="../theme.js" defer></script>
         <script>
-            <!-- All functions go here -->
-
-            // STEP 1: Define a global object named `myHero`
-            // Properties needed: name (string), power (number, starting at 100), comment (string)
             let myHero = {
                 name: "Kenny",
                 power: 100,
-                comment: "Ready for training!",
+                comment: "<i>The hero is ready to train.</i>",
             };
 
-            // STEP 2: Write a function named `trainHero()` that reduces power and checks comments
             function trainHero() {
-                // Write your code here:
-                myHero.power -= 10; // Subtract 10 from myHero.power
-                // - Use if / else if / else statements to change myHero.comment based on myHero.power
+                myHero.power -= 10;
+
                 if (myHero.power == 0) {
-                    // - If myHero.power <= 0:
-                    alert("Oh my god, they killed Kenny!. You bastard!"); //     1. Show an alert() warning the user
-                    myHero.comment = "<i>The hero falls silent</i>"; //     2. Set myHero.comment to a faint/reset message
-                } //     3. Reset myHero.power back to 100
+                    alert("Oh my god, they killed Kenny! You bastard!");
+                    myHero.comment = "<i>The hero falls silent.</i>";
+                    }
                 if (myHero.power <= 0) {
                     myHero.power = 100;
-                } else if (myHero.power <= 30) {
-                    myHero.comment = "Low power! Need a break!";
-                } else if (myHero.power <= 70) {
-                    myHero.comment = "Medium power! Keep going!";
-                } else {
-                    myHero.comment = "High power! You're unstoppable!";
+                    }
+                else if (myHero.power <= 30) {
+                    myHero.comment = "<i>The hero's breath falls faint</i>";
                 }
+                else if (myHero.power <= 70) {
+                    myHero.comment = "<i>The hero slows down, getting tired</i>";
+                    }
+                else {
+                    myHero.comment = "<i>The hero increases his power, getting stronger by the moment</i>";
+                    }
             }
         </script>
     </head>
