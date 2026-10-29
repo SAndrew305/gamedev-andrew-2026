@@ -1,22 +1,6 @@
 # gamedev-andrew-2026
 
-A small collection of static HTML/CSS/JavaScript pages created for the Game Development course. The site is organised as a portfolio index plus one page per assignment or experiment.
-
-## Folder structure
-
-```text
-.
-├── index.html                 # Homepage / assignment index
-├── baseline.css               # Shared base styling (used by several pages)
-├── public/
-│   ├── t1a01-table.html       # Term 1 assignment pages (numbered by topic)
-│   ├── t1a02-list.html
-│   ├── ...
-│   ├── t1a11-arrays.html
-│   ├── x1a01-gif-experiment.html
-│   └── x1a10-mandelbrot-llm.html
-└── README.md
-```
+A collection of static HTML, CSS, and JavaScript pages created for a Game Development (Computer Programming) course I'm taking. The site is organised as a portfolio index plus one page per assignment or experiment.
 
 ## How to run / view
 
@@ -46,6 +30,7 @@ Optional tooling is provided for consistent formatting and HTML validation.
 
 ## Notes
 
-- `t1a...` pages are term 1 assignments, named by topic (`table`, `list`, `forms`, ...).
-- `x1a...` pages are extra / experimental assignments.
-- `baseline.css` is the shared stylesheet; some older pages still carry their own inline styles and may be migrated later.
+- `t1a...` pages: term 1 assignments, named by topic (`table`, `list`, `forms`, ...).
+- `x1a...` pages: extra / experimental works created either with the intent to gain additional marks or simply because I wanted to make something.
+- `baseline.css` -- shared stylesheet; some older pages may carry their own inline styles
+- `script.js` = dark mode toggle on all webpages.
