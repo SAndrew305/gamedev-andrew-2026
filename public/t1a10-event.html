@@ -12,8 +12,7 @@
 
             <p>Demonstrates responding to user events such as clicks and input changes.</p>
 
-            <label for="eventInput">Type something:</label>
-            <input id="eventInput" type="text" value="Hello" /><br /><br />
+            <input id="eventInput" type="text" placeholder="Type something..." /><br /><br />
 
             <input type="button" value="Click me" id="btnClick" /><br /><br />
 
@@ -24,8 +23,15 @@
         <script>
             document.getElementById("btnClick").addEventListener("click", function () {
                 var value = document.getElementById("eventInput").value;
-                document.getElementById("eventOutput").innerHTML =
-                    "Button clicked with value: " + value;
+                if (value == "") {
+                    document.getElementById("eventOutput").innerHTML =
+                        "Please input something, anything"        
+                }
+                else {
+                    document.getElementById("eventOutput").innerHTML =
+                        "Button clicked with value: " + value;
+                }
+                
             });
         </script>
         <script src="../theme.js" defer></script>
