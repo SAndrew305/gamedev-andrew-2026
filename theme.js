@@ -16,7 +16,7 @@
         try {
             localStorage.setItem(STORAGE_KEY, theme);
         } catch (e) {
-            // LocalStorage unavailable; ignore.
+            // localStorage unavailable; ignore.
         }
         if (toggle) {
             toggle.setAttribute("aria-pressed", theme === "dark");
@@ -43,7 +43,7 @@
             toggle.type = "button";
             toggle.className = "theme-toggle";
             toggle.setAttribute("aria-label", "Toggle dark mode");
-            toggle.textContent = "\u{1F315}"; // 🌓
+            toggle.textContent = "\u{1F313}"; // half moon emoticon, courtesy of utf-8
             body.appendChild(toggle);
         }
         toggle.addEventListener("click", function () {

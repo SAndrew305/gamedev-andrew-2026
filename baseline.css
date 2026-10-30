@@ -2,15 +2,15 @@
    Colours are driven by CSS custom properties so light/dark mode works
    site-wide via `data-theme="dark"` on <html>. */
 :root {
-    --color-bg: #f0f4f8;
-    --color-bg-gradient: linear-gradient(to bottom right, #f0f4f8, #d9e2ec, #bcccdc);
-    --color-text: #000000;
-    --color-link: #0053a6;
-    --color-link-hover: #003d7a;
-    --color-border: #cccccc;
-    --color-surface: #ffffff;
-    --color-surface-text: #000000;
-    --color-muted: #555555;
+    --color-bg: #ccc;
+    --color-bg-gradient: linear-gradient(to bottom right, #fff, #ccc, #999, #666);
+    --color-text: #000;
+    --color-link: #03c;
+    --color-link-hover: #06c;
+    --color-border: #999;
+    --color-surface: #fff;
+    --color-surface-text: #000;
+    --color-muted: #666;
 
     font-family:
         -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -102,7 +102,7 @@ td {
     opacity: 0.85;
 }
 
-/* Universal theme toggle button. */
+/* universal theme toggle button. */
 .theme-toggle {
     position: fixed;
     top: 1rem;
@@ -111,11 +111,9 @@ td {
     background: var(--color-surface);
     color: var(--color-text);
     border: 1px solid var(--color-border);
-    border-radius: 999px;
-    padding: 0.45rem 0.85rem;
+    padding: 0.45rem 0.45rem;
     font-size: 0.9rem;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .theme-toggle:hover {
@@ -128,13 +126,13 @@ td {
 }
 
 [data-theme="dark"] {
-    --color-bg: #141516;
-    --color-bg-gradient: linear-gradient(to bottom right, #38393a, #141516, #0f1011);
-    --color-text: #ffffff;
-    --color-link: #00ff41;
-    --color-link-hover: #66ff7a;
-    --color-border: #444444;
-    --color-surface: #1c1d1e;
-    --color-surface-text: #ffffff;
-    --color-muted: #aaaaaa;
+    --color-bg: #666;
+    --color-bg-gradient: linear-gradient(to bottom right, #333, #000);
+    --color-text: #fff;
+    --color-link: #0f6;
+    --color-link-hover: #6fc;
+    --color-border: #666;
+    --color-surface: #333;
+    --color-surface-text: #fff;
+    --color-muted: #999;
 }
