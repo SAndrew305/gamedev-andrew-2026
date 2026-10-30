@@ -26,7 +26,24 @@
                 const sumAdd = input + input;
                 const sumHalf = input / 2;
                 const sumSq = input * input;
-                return input + " + " + input + " = " + sumAdd + "<br>" + input + " / " + "2 " + " = " + sumHalf + "<br />"+ input + " squared " + " = " + sumSq;
+                return (
+                    input +
+                    " + " +
+                    input +
+                    " = " +
+                    sumAdd +
+                    "<br>" +
+                    input +
+                    " / " +
+                    "2 " +
+                    " = " +
+                    sumHalf +
+                    "<br />" +
+                    input +
+                    " squared " +
+                    " = " +
+                    sumSq
+                );
             }
 
             function userRandInt() {
@@ -61,11 +78,10 @@
 
             <input type="button" value="Function example" id="btnFunc0" />
 
-            <div id="division1">...</div><br />
+            <div id="division1">...</div>
+            <br />
 
-            <h3>
-                Example of function generating randInt between 1 + userValue:
-            </h3>
+            <h3>Example of function generating randInt between 1 + userValue:</h3>
 
             <input type="button" value="Function example" id="btnFunc1" />
             <div id="division2">...</div>

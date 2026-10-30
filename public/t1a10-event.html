@@ -25,18 +25,16 @@
                 let value = document.getElementById("eventInput").value;
                 if (value == "") {
                     document.getElementById("eventOutput").innerHTML =
-                        "Please input something, anything"
-                        
+                        "Please input something, anything";
+
                     // todo: add counter to track how many times btnClick has experienced something
                     //       like having it's button (singular) pushed one too many times, and slowly
                     //       responding with snarkier and snarkier statements that I'm too unimaginative
                     //       to create.
-                }
-                else {
+                } else {
                     document.getElementById("eventOutput").innerHTML =
                         "Button clicked with value: " + value;
                 }
-
             });
         </script>
         <script src="../theme.js" defer></script>

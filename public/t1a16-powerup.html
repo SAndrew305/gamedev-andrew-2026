@@ -19,19 +19,17 @@
                 if (myHero.power == 0) {
                     alert("Oh my god, they killed Kenny! You bastard!");
                     myHero.comment = "<i>The hero falls silent.</i>";
-                    }
+                }
                 if (myHero.power <= 0) {
                     myHero.power = 100;
-                    }
-                else if (myHero.power <= 30) {
+                } else if (myHero.power <= 30) {
                     myHero.comment = "<i>The hero's breath falls faint</i>";
-                }
-                else if (myHero.power <= 70) {
+                } else if (myHero.power <= 70) {
                     myHero.comment = "<i>The hero slows down, getting tired</i>";
-                    }
-                else {
-                    myHero.comment = "<i>The hero increases his power, getting stronger by the moment</i>";
-                    }
+                } else {
+                    myHero.comment =
+                        "<i>The hero increases his power, getting stronger by the moment</i>";
+                }
             }
         </script>
     </head>
@@ -41,23 +39,19 @@
             <!-- Problem Statement / Prompt for Students -->
             <fieldset style="width: 100%; margin: auto; padding: 10px">
                 <legend><strong>Assignment Prompt:</strong></legend>
-                1. Define a global object called <code>myHero</code> with
-                properties: <code>name</code> ("Captain Code"),
-                <code>power</code> (100), and <code>comment</code> ("Ready for
-                training!").<br />
-                2. Complete the <code>trainHero()</code> function above to
-                subtract 10 from <code>myHero.power</code> every time the button
-                is clicked.<br />
-                3. Add <code>if / else if / else</code> conditions in
-                <code>trainHero()</code> to update
-                <code>myHero.comment</code> based on remaining power levels
-                (e.g., High, Medium, Low power comments).<br />
-                4. When <code>myHero.power</code> reaches 0 or below, trigger a
-                browser <code>alert()</code>, update the comment, and reset
-                power back to 100.<br />
+                1. Define a global object called <code>myHero</code> with properties:
+                <code>name</code> ("Captain Code"), <code>power</code> (100), and
+                <code>comment</code> ("Ready for training!").<br />
+                2. Complete the <code>trainHero()</code> function above to subtract 10 from
+                <code>myHero.power</code> every time the button is clicked.<br />
+                3. Add <code>if / else if / else</code> conditions in <code>trainHero()</code> to
+                update <code>myHero.comment</code> based on remaining power levels (e.g., High,
+                Medium, Low power comments).<br />
+                4. When <code>myHero.power</code> reaches 0 or below, trigger a browser
+                <code>alert()</code>, update the comment, and reset power back to 100.<br />
                 5. Complete the <code>onclick</code> code below to invoke
-                <code>trainHero()</code> and display the updated object data
-                inside <code>myDiv01</code>.
+                <code>trainHero()</code> and display the updated object data inside
+                <code>myDiv01</code>.
             </fieldset>
 
             <input
