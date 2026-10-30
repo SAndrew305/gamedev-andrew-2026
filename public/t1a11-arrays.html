@@ -29,11 +29,11 @@
         <p>Last updated: <span id="lastModified"></span></p>
         <script>
             document.getElementById("btnArray").addEventListener("click", function () {
-                var maxEntries = parseInt(document.getElementById("myText1").value, 10);
-                var names = ["Fred", "Mary", "Liz"];
-                var output = "";
+                let maxEntries = parseInt(document.getElementById("myText1").value, 10);
+                let names = ["Fred", "Mary", "Liz"];
+                let output = "";
 
-                for (var index = 0; index < maxEntries; index++) {
+                for (let index = 0; index < maxEntries; index++) {
                     output += "Loop #: " + index + " array entry: " + names[index] + "<br>";
                 }
 

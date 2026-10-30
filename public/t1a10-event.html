@@ -22,7 +22,7 @@
         <p>Last updated: <span id="lastModified"></span></p>
         <script>
             document.getElementById("btnClick").addEventListener("click", function () {
-                var value = document.getElementById("eventInput").value;
+                let value = document.getElementById("eventInput").value;
                 if (value == "") {
                     document.getElementById("eventOutput").innerHTML =
                         "Please input something, anything"

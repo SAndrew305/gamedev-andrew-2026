@@ -44,8 +44,8 @@ document.getElementById('output').innerHTML = input
         <p>Last updated: <span id="lastModified"></span></p>
         <script>
             document.getElementById("squareBtn").addEventListener("click", function () {
-                var input = parseFloat(document.getElementById("numberInput").value);
-                var answer = input * input;
+                let input = parseFloat(document.getElementById("numberInput").value);
+                let answer = input * input;
                 document.getElementById("output").innerHTML = input + " squared = " + answer;
             });
         </script>

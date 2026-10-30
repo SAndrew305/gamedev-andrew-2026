@@ -2,10 +2,10 @@
    Included on every page. Toggles `data-theme` on <html>, persists the choice
    in localStorage, and respects the system preference by default. */
 (function () {
-    var STORAGE_KEY = "gamedev-theme";
-    var html = document.documentElement;
-    var body = document.body;
-    var toggle = null;
+    let STORAGE_KEY = "gamedev-theme";
+    let html = document.documentElement;
+    let body = document.body;
+    let toggle = null;
 
     function setTheme(theme) {
         if (theme === "dark") {
@@ -47,14 +47,14 @@
             body.appendChild(toggle);
         }
         toggle.addEventListener("click", function () {
-            var isDark = html.hasAttribute("data-theme");
+            let isDark = html.hasAttribute("data-theme");
             setTheme(isDark ? "light" : "dark");
         });
     }
 
     function init() {
-        var saved = getSavedTheme();
-        var theme = saved ? saved : getSystemTheme();
+        let saved = getSavedTheme();
+        let theme = saved ? saved : getSystemTheme();
         setTheme(theme);
 
         if (!saved) {

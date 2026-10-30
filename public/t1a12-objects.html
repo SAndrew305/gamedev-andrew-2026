@@ -22,7 +22,7 @@
 
             <br /><br /><button
                 onClick="{
-                    let myPerson = { // the fuck? how many let statements are there in this spaghetti-ass vibe-slop codebase?
+                    let myPerson = {
                         firstName: 'John',
                         lastName: 'Doe',
                         age: 50,
@@ -59,8 +59,8 @@
                 console.log("myPerson is not an object");       // A: this isn't a massive frontend for some massive company and
             }                                                   // B: anybody who can program can just look at an object and be like, yep, thats an object
 
-            var myText01 = document.getElementById("myText01");
-            var easterP = document.getElementById("Easter Egg");
+            let myText01 = document.getElementById("myText01");
+            let easterP = document.getElementById("Easter Egg");
 
             function onHover() {
                 if (myText01.value === "Or is it?") {

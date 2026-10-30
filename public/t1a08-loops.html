@@ -111,7 +111,7 @@ for (let l = 0; l &lt;= maxValue; l++)
         --------------------------------------------------------------------<br />
         This while loop is set to keep outputting the same variable increasing until a condition is
         met. Here is a more practical example of the code, in a countdown sequence, that uses<br />
-        BOTH variables:<br />
+        BOTH liables:<br />
         --------------------------------------------------------------------<br />
         <pre>
     // countdown
@@ -204,10 +204,10 @@ int main()
         <script>
             document.getElementById("btnForLoop").addEventListener("click", function () {
                 document.getElementById("div1").innerHTML = "";
-                var t = "";
-                var max = parseInt(document.getElementById("num1").value);
+                let t = "";
+                let max = parseInt(document.getElementById("num1").value);
 
-                for (var loop1 = 0; loop1 < max; loop1++) {
+                for (let loop1 = 0; loop1 < max; loop1++) {
                     if (loop1 * 2 > max) {
                         t += "thing1 happened! ";
                     }
@@ -218,10 +218,10 @@ int main()
 
             document.getElementById("btnEvenNum").addEventListener("click", function () {
                 document.getElementById("div1").innerHTML = "";
-                var t = "";
-                var max = parseInt(document.getElementById("num1").value);
+                let t = "";
+                let max = parseInt(document.getElementById("num1").value);
 
-                for (var loop1 = 0; loop1 < max; loop1++) {
+                for (let loop1 = 0; loop1 < max; loop1++) {
                     if (loop1 % 2 == 0) {
                         t += "even num, ";
                     }
@@ -231,11 +231,11 @@ int main()
             });
 
             document.getElementById("btnTotalScore").addEventListener("click", function () {
-                var raw = document.getElementById("scoresInput").value;
-                var parts = raw.split(",");
-                var total = 0;
+                let raw = document.getElementById("scoresInput").value;
+                let parts = raw.split(",");
+                let total = 0;
 
-                for (var i = 0; i < parts.length; i++) {
+                for (let i = 0; i < parts.length; i++) {
                     total += parseInt(parts[i].trim(), 10) || 0;
                 }
 
@@ -243,12 +243,12 @@ int main()
             });
 
             document.getElementById("btnHighScore").addEventListener("click", function () {
-                var raw = document.getElementById("highScoresInput").value;
-                var parts = raw.split(",");
-                var high = null;
+                let raw = document.getElementById("highScoresInput").value;
+                let parts = raw.split(",");
+                let high = null;
 
-                for (var i = 0; i < parts.length; i++) {
-                    var value = parseInt(parts[i].trim(), 10) || 0;
+                for (let i = 0; i < parts.length; i++) {
+                    let value = parseInt(parts[i].trim(), 10) || 0;
                     if (high === null || value > high) {
                         high = value;
                     }
@@ -258,12 +258,12 @@ int main()
             });
 
             document.getElementById("btnTable").addEventListener("click", function () {
-                var size = parseInt(document.getElementById("tableSizeInput").value, 10) || 1;
-                var t = "<table>";
+                let size = parseInt(document.getElementById("tableSizeInput").value, 10) || 1;
+                let t = "<table>";
 
-                for (var row = 1; row <= size; row++) {
+                for (let row = 1; row <= size; row++) {
                     t += "<tr>";
-                    for (var col = 1; col <= size; col++) {
+                    for (let col = 1; col <= size; col++) {
                         t += "<td>" + row * col + "</td>";
                     }
                     t += "</tr>";
