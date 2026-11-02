@@ -5,48 +5,48 @@
         <link rel="stylesheet" href="../baseline.css" />
         <script src="../theme.js" defer></script>
         <script>
-            document.name="myDocument"
-            window.name="myWindow"
-            document.cookie = "cookieName=fred"
+            document.name = "myDocument";
+            window.name = "myWindow";
+            document.cookie = "cookieName=fred";
 
             let splitIndex = 0;
             let splitArray = new Array();
 
-            function splits(string,text) {
-                let strLength = string.length, txtLength = text.length;
-                if ((strLength == 0) || (txtLength == 0)) return;
+            function splits(string, text) {
+                let strLength = string.length,
+                    txtLength = text.length;
+                if (strLength == 0 || txtLength == 0) return;
 
                 let i = string.indexOf(text);
-                if ((!i) && (text != string.substring(0,txtLength))) return;
+                if (!i && text != string.substring(0, txtLength)) return;
                 if (i == -1) {
                     splitArray[splitIndex++] = string;
                     return;
                 }
 
-                splitArray[splitIndex++] = string.substring(0,i);
+                splitArray[splitIndex++] = string.substring(0, i);
 
-                if (i+txtLength < strLength)
-                    splits(string.substring(i+txtLength,strLength),text);
+                if (i + txtLength < strLength)
+                    splits(string.substring(i + txtLength, strLength), text);
 
                 return;
             }
 
-            function split(string,text) {
+            function split(string, text) {
                 splitIndex = 0;
                 splitArray = [];
-                splits(string,text);
+                splits(string, text);
             }
 
             function join(arrayName) {
-                let temp = '';
-                for (let i = 0; i < splitIndex; i++)
-                    temp += (i ? '\n' : '') + arrayName[i];
+                let temp = "";
+                for (let i = 0; i < splitIndex; i++) temp += (i ? "\n" : "") + arrayName[i];
                 return temp;
             }
 
             function sort(arrayName) {
-                for (let i=0; i<(splitIndex-1); i++)
-                    for (let j=i+1; j<splitIndex; j++)
+                for (let i = 0; i < splitIndex - 1; i++)
+                    for (let j = i + 1; j < splitIndex; j++)
                         if (arrayName[j] < arrayName[i]) {
                             let dummy = arrayName[i];
                             arrayName[i] = arrayName[j];
@@ -55,58 +55,61 @@
             }
 
             function sorttext() {
-                document.myForm.myTextarea.value =
-                    document.myForm.myTextarea.value.split('\n').sort().join('\n');
+                document.myForm.myTextarea.value = document.myForm.myTextarea.value
+                    .split("\n")
+                    .sort()
+                    .join("\n");
             }
         </script>
 
         <script>
-                function myObjectData(myObject){
-                    if (!myObject) return; {
-                        document.myForm.myText1.value = document.myForm.name + '.' + myObject.name
-                    }
-
-                    window.status = 'Please Wait'
-                    document.myForm.myText1.value = ''
-                    document.myForm.myTextarea.value = ''
-                    let myLoop = 0
-                    let output = ''
-
-                    for (let prop in myObject){
-                        let val
-                        try {
-                            val = myObject[prop]
-                        } catch (e) {
-                            val = '[unreadable]'
-                        }
-                        if (typeof val === 'function') continue
-                        myLoop+=1
-                        output += myObject.name + '.' + prop + '=' + val + '\n'
-                        if (myLoop % 3 === 1){
-                            window.status += '.'
-                        }
-                    }
-
-                    document.myForm.myTextarea.value = output
-                    document.myForm.myText1.value = document.myForm.name + '.' + myObject.name
-                    window.status += 'Loaded '
-                    sorttext()
-                    window.status += 'Sorted.'
+            function myObjectData(myObject) {
+                if (!myObject) return;
+                {
+                    document.myForm.myText1.value = document.myForm.name + "." + myObject.name;
                 }
 
-                document.counter=0   // one time set counter = 0
+                window.status = "Please Wait";
+                document.myForm.myText1.value = "";
+                document.myForm.myTextarea.value = "";
+                let myLoop = 0;
+                let output = "";
+
+                for (let prop in myObject) {
+                    let val;
+                    try {
+                        val = myObject[prop];
+                    } catch (e) {
+                        val = "[unreadable]";
+                    }
+                    if (typeof val === "function") continue;
+                    myLoop += 1;
+                    output += myObject.name + "." + prop + "=" + val + "\n";
+                    if (myLoop % 3 === 1) {
+                        window.status += ".";
+                    }
+                }
+
+                document.myForm.myTextarea.value = output;
+                document.myForm.myText1.value = document.myForm.name + "." + myObject.name;
+                window.status += "Loaded ";
+                sorttext();
+                window.status += "Sorted.";
+            }
+
+            document.counter = 0; // one time set counter = 0
 
             function moreAnimations() {
-                const pic = document.getElementById('move1');
-                pic.style.left = (parseFloat(pic.style.left) + 2) + 'px';
-                pic.style.top  = (parseFloat(pic.style.top)  + 1) + 'px';
+                const pic = document.getElementById("move1");
+                pic.style.left = parseFloat(pic.style.left) + 2 + "px";
+                pic.style.top = parseFloat(pic.style.top) + 1 + "px";
             }
 
             function showCSS() {
                 const sheet = document.styleSheets[0]; // baseline.css
-                let output = '';
+                let output = "";
                 for (const rule of sheet.cssRules) {
-                    output += rule.cssText + '\n';
+                    output += rule.cssText + "\n";
                 }
                 document.myForm.myTextarea.value = output;
             }
@@ -115,61 +118,191 @@
 
     <body>
         <main>
-            <h1>Instructions t2a17-Hackbrowser</h1>
+            <h1>t2a17 - Hackbrowser</h1>
             <hr />
-            <p>Use the first 15 buttons to decide on what words to enter for the last 5 buttons to gain
-            interesting information from your present web browser. Note: The results may be different on
-            Chrome, Safari, IE or phonegap. Those differences may be useful when programming. Also note:
-            Objects will not work until a real instance of the object is on the web page!</p>
+            <p>
+                Use the first 15 buttons to decide on what words to enter for the last 5 buttons to
+                gain interesting information from your present web browser. <br /><br />
 
+                Note: The results may be different on Chrome, Safari, IE or phonegap. Those
+                differences may be useful when programming. Also, objects won't work until a real
+                instance of the object is on the web page.
+            </p>
+
+            <hr />
             <form name="myForm2">
-            <textarea name="myTextarea">wow</textarea>
+                <textarea name="myTextarea">wow</textarea>
 
-            <input type="text" name="myText1" id="myText2" size="50" value=""><br>
-
+                <input type="text" name="myText1" id="myText2" size="50" value="" /><br />
             </form>
 
+            <h3>Click the buttons to see all useable properties and methods of the object.</h3>
 
-            <h3>Click the buttons to see all useable properties and methods of the object. Click refresh to reset Browser</h3>
-            <form onsubmit="return false" name="myForm">
+            <button style="border-color: #00000000; background-color: #00000000; font-size: 16px">
+                <b>Refresh Page</b></button
+            ><br /><br />
 
-                <input type="text" name="myText1" size="50" value=""><br>
+            <form onsubmit="return false;" name="myForm">
+                <input type="text" name="myText1" size="50" value="" /><br />
 
-                <button onclick="{myObjectData(window)}">1 window</button>
-                <button onclick="{myObjectData(document)}">2 document</button>
-                <button onclick="{myObjectData(document.myForm2)}">3 document.myForm2</button>
-                <button onclick="{myObjectData(document.myForm2.myTextarea)}">4 document.myForm2.myTextarea</button>
-                <button onclick="{myObjectData(window.location)}">5 window.location</button>
-                <button onclick="{myObjectData(window.parent)}">6 window.parent</button>
-                <button onclick="{myObjectData(window.chrome)}">7 window.chrome</button>
-                <button onclick="{myObjectData(document.getElementById('move1').style)}">8 document.move1</button>
-                <button onclick="{showCSS()}">9 baseline.css rules</button>
-                <button onclick="{myObjectData(document.getElementById('move1'))}">10 document.all.move1</button>
-                <button onclick="{myObjectData(window.localStorage)}">11 window.localStorage</button>
-                <button onclick="{myObjectData(document.getElementById('move1').style)}">12 document.getElementById('move1').style</button>
-                <button onclick="{myObjectData(document.myForm2.myText1)}">13 document.myForm2.myText1</button>
-                <button onclick="{myObjectData(document.getElementById('myText2'))}">14 document.getElementById('myText2')</button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(window);
+                        }
+                    "
+                >
+                    1 window
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(document);
+                        }
+                    "
+                >
+                    2 document
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(document.myForm2);
+                        }
+                    "
+                >
+                    3 document.myForm2
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(document.myForm2.myTextarea);
+                        }
+                    "
+                >
+                    4 document.myForm2.myTextarea
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(window.location);
+                        }
+                    "
+                >
+                    5 window.location
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(window.parent);
+                        }
+                    "
+                >
+                    6 window.parent
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(window.chrome);
+                        }
+                    "
+                >
+                    7 window.chrome
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(document.getElementById('move1').style);
+                        }
+                    "
+                >
+                    8 document.move1
+                </button>
+                <button
+                    onclick="
+                        {
+                            showCSS();
+                        }
+                    "
+                >
+                    9 baseline.css rules
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(document.getElementById('move1'));
+                        }
+                    "
+                >
+                    10 document.all.move1
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(window.localStorage);
+                        }
+                    "
+                >
+                    11 window.localStorage
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(document.getElementById('move1').style);
+                        }
+                    "
+                >
+                    12 document.getElementById('move1').style
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(document.myForm2.myText1);
+                        }
+                    "
+                >
+                    13 document.myForm2.myText1
+                </button>
+                <button
+                    onclick="
+                        {
+                            myObjectData(document.getElementById('myText2'));
+                        }
+                    "
+                >
+                    14 document.getElementById('myText2')
+                </button>
                 <button onclick="myObjectData(document.fonts)">15 document.fonts</button>
                 <button onclick="myObjectData(window.navigator)">16 window.navigator</button>
                 <button onclick="myObjectData(window.screen)">17 window.screen</button>
                 <button onclick="myObjectData(window.history)">18 window.history</button>
                 <button onclick="myObjectData(window.performance)">19 window.performance</button>
-                <button onclick="myObjectData(Intl.DateTimeFormat().resolvedOptions())">20 Intl</button>
+                <button onclick="myObjectData(Intl.DateTimeFormat().resolvedOptions())">
+                    20 Intl
+                </button>
                 <br /><br />
 
                 <textarea name="myTextarea" rows="20" cols="70" wrap></textarea>
             </form>
 
-            <br>At the bottom of every page make sure you include the following button:<br>
+            <br />At the bottom of every page make sure you include the following button:<br />
 
-            <button style="font-size:25px" onclick="{window.history.back()}">Back</button><br><br>
+            <button
+                style="font-size: 12px"
+                onclick="
+                    {
+                        window.history.back();
+                    }
+                "
+            >
+                Back</button
+            ><br /><br />
 
             <hr />
             <p class="center">Last updated: <span id="lastModified"></span></p>
         </main>
-    <script>
-        // Display the document last modified date.
-        document.getElementById("lastModified").textContent = document.lastModified;
-    </script>
+        <script>
+            // Display the document last modified date.
+            document.getElementById("lastModified").textContent = document.lastModified;
+        </script>
     </body>
 </html>
