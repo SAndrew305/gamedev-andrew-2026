@@ -55,6 +55,27 @@ table {
     margin: 1rem 0;
 }
 
+textarea {
+    padding: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0rem;
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+}
+
+input {
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+}
+
+button {
+    padding: 0.25rem;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-surface-text);
+    cursor: pointer;
+}
 caption {
     caption-side: top;
     text-align: left;
