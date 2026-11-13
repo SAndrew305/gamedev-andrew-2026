@@ -1,43 +1,94 @@
-<h1 align="center">t2a19-json-fred.html</h1>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a10 - events</title>
+        <link rel="stylesheet" href="../baseline.css" />
+    </head>
+    <body>
+        <main>
+            <h1 align="center">t2a19-json-fred.html</h1>
 
-<script>
-    async function fetchData(url) {
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data);
+            <script>
+                async function fetchData(url) {
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    console.log(data);
 
-        const myJson = JSON.stringify(data, null, 2);
-        document.getElementById("myDiv1").innerHTML = `<pre>${myJson}</pre>`;
+                    const myJson = JSON.stringify(data, null, 2);
+                    document.getElementById("myDiv1").innerHTML =
+                        `<pre>${myJson}</pre>`;
 
-        // Pick the image URL from whichever field the API uses
-        const img = data.image || data.message || data.url;
-        document.getElementById("myDiv1").innerHTML +=
-            `<img src="${img}" alt="Random Image" style="max-width: 100%; height: auto;">`;
+                    // pick image URL from whichever field the API uses
+                    const img = data.image || data.message || data.url;
+                    document.getElementById("myDiv1").innerHTML +=
+                        `<img src="${img}" alt="Random Image" style="max-width: 100%; height: auto;">`;
 
-        // Bonus: show the fact if the API has one
-        if (data.fact) {
-            document.getElementById("myDiv1").innerHTML +=
-                `<p>${data.fact}</p>`;
-        }
-    }
-</script>
+                    // show the fact if the API has one -- not really necessary but it's a nice addition
+                    if (data.fact) {
+                        document.getElementById("myDiv1").innerHTML +=
+                            `<p>${data.fact}</p>`;
+                    }
+                }
+            </script>
 
-<select id="mySelect" size="1" onchange="fetchData(this.value)">
-    <option></option>
-    <option value="https://randomfox.ca/floof/">randomfox</option>
-    <option value="https://dog.ceo/api/breeds/image/random">randomdog</option>
-    <option value="https://random-d.uk/api/random">randomduck</option>
-    <option value="https://some-random-api.com/animal/fox">
-        fox fact + image
-    </option>
-    <option value="https://some-random-api.com/animal/cat">
-        cat fact + image
-    </option>
-    <option value="https://some-random-api.com/animal/panda">
-        panda fact + image
-    </option></select
-><br /><br />
+            <table>
+                <tr>
+                    <td align="left">
+                        <select
+                            id="mySelect"
+                            size="1"
+                            onchange="fetchData(this.value)"
 
-<div id="myDiv1">...</div>
+                        >
+                            <option></option>
+                            <option value="https://randomfox.ca/floof/">
+                                randomfox
+                            </option>
+                            <option
+                                value="https://dog.ceo/api/breeds/image/random"
+                            >
+                                randomdog
+                            </option>
+                            <option value="https://random-d.uk/api/random">
+                                randomduck
+                            </option>
+                            <option
+                                value="https://some-random-api.com/animal/fox"
+                            >
+                                fox fact + image
+                            </option>
+                            <option
+                                value="https://some-random-api.com/animal/cat"
+                            >
+                                cat fact + image
+                            </option>
+                            <option
+                                value="https://some-random-api.com/animal/panda"
+                            >
+                                panda fact + image
+                            </option></select
+                        ><br /><br />
 
-Put your JSON research below this part.
+                        <div id="myDiv1" align="left">...</div>
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <b>JSON:</b> JavaScript Object Notation. Lightweight data
+                interchange format. Language independent, meaning it is able to
+                be used in multiple programming languages.
+            </p>
+
+            <hr />
+            <p align="center">Last updated: <span id="lastModified"></span></p>
+        </main>
+        <script src="../theme.js" defer></script>
+        <script>
+            // Display the document last modified date.
+            document.getElementById("lastModified").textContent =
+                document.lastModified;
+        </script>
+    </body>
+</html>
