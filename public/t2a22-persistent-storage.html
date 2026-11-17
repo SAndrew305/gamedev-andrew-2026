@@ -15,10 +15,7 @@ Use local storage to make a to-do list
     <body
         onunload="
             {
-                localstorage.setItem(
-                    'myStoredText',
-                    document.getElementById('myText1').value,
-                );
+                localstorage.setItem('myStoredText', document.getElementById('myText1').value);
             }
         "
     >

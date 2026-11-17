@@ -29,8 +29,7 @@ function sortInput() {
     quickSort(arr, 0, arr.length - 1);
     console.log("Sorted array:   " + arr);
 
-    document.getElementById("sortedOutput").textContent =
-        "Sorted array: " + arr.join(", ");
+    document.getElementById("sortedOutput").textContent = "Sorted array: " + arr.join(", ");
 }
 
 arr = document.getElementById("myInput").value.split(",").map(Number);

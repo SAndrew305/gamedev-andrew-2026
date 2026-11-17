@@ -17,8 +17,7 @@
                     console.log(data);
 
                     const myJson = JSON.stringify(data, null, 2);
-                    document.getElementById("myDiv1").innerHTML =
-                        `<pre>${myJson}</pre>`;
+                    document.getElementById("myDiv1").innerHTML = `<pre>${myJson}</pre>`;
 
                     // pick image URL from whichever field the API uses
                     const img = data.image || data.message || data.url;
@@ -27,8 +26,7 @@
 
                     // show the fact if the API has one -- not really necessary but it's a nice addition
                     if (data.fact) {
-                        document.getElementById("myDiv1").innerHTML +=
-                            `<p>${data.fact}</p>`;
+                        document.getElementById("myDiv1").innerHTML += `<p>${data.fact}</p>`;
                     }
                 }
             </script>
@@ -36,37 +34,20 @@
             <table>
                 <tr>
                     <td align="left">
-                        <select
-                            id="mySelect"
-                            size="1"
-                            onchange="fetchData(this.value)"
-
-                        >
+                        <select id="mySelect" size="1" onchange="fetchData(this.value)">
                             <option></option>
-                            <option value="https://randomfox.ca/floof/">
-                                randomfox
-                            </option>
-                            <option
-                                value="https://dog.ceo/api/breeds/image/random"
-                            >
+                            <option value="https://randomfox.ca/floof/">randomfox</option>
+                            <option value="https://dog.ceo/api/breeds/image/random">
                                 randomdog
                             </option>
-                            <option value="https://random-d.uk/api/random">
-                                randomduck
-                            </option>
-                            <option
-                                value="https://some-random-api.com/animal/fox"
-                            >
+                            <option value="https://random-d.uk/api/random">randomduck</option>
+                            <option value="https://some-random-api.com/animal/fox">
                                 fox fact + image
                             </option>
-                            <option
-                                value="https://some-random-api.com/animal/cat"
-                            >
+                            <option value="https://some-random-api.com/animal/cat">
                                 cat fact + image
                             </option>
-                            <option
-                                value="https://some-random-api.com/animal/panda"
-                            >
+                            <option value="https://some-random-api.com/animal/panda">
                                 panda fact + image
                             </option></select
                         ><br /><br />
@@ -76,9 +57,9 @@
                 </tr>
             </table>
             <p>
-                <b>JSON:</b> JavaScript Object Notation. Lightweight data
-                interchange format. Language independent, meaning it is able to
-                be used in multiple programming languages.
+                <b>JSON:</b> JavaScript Object Notation. Lightweight data interchange format.
+                Language independent, meaning it is able to be used in multiple programming
+                languages.
             </p>
 
             <hr />
@@ -87,8 +68,7 @@
         <script src="../theme.js" defer></script>
         <script>
             // Display the document last modified date.
-            document.getElementById("lastModified").textContent =
-                document.lastModified;
+            document.getElementById("lastModified").textContent = document.lastModified;
         </script>
     </body>
 </html>
