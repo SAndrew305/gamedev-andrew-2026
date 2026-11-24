@@ -6,19 +6,25 @@
     value="encrypt"
     onclick="
         {
-            let myTemp = '';
-            myString = document.getElementById('myArea01').value.toLowerCase().split('');
-            for (let myLoop = 0; myLoop < myString.length; myLoop++) {
-                myTemp = myString[myLoop];
-                if (myString[myLoop] == 'e') {
-                    myTemp = 'f';
+            function caesar(str) {
+                let string = '';
+                for (var i = 0; i < str.length; i++) {
+                    var temp = str.charAt(i);
+                    if (temp !== ' ' && temp !== '!' && temp !== '?') {
+                        let code = temp.charCodeAt(0);
+                        string += String.fromCharCode(
+                            ((code - 97 + 13 + 26) % 26) + 97,
+                        );
+                    } else {
+                        string += temp;
+                    }
                 }
-                if (myString[myLoop] == 'h') {
-                    myTemp = 'i';
-                }
-                myString[myLoop] = myTemp;
+                return string;
             }
-            document.getElementById('myArea02').value = myString.join('');
+
+            let input = document.getElementById('myArea01').value.toLowerCase();
+
+            document.getElementById('myArea02').value = caesar(input);
         }
     "
 /><br /><br />
@@ -30,9 +36,45 @@
     value="decrypt"
     onclick="
         {
-            alert('Sorry, you have to do this!');
+            function caesar(str) {
+                let string = '';
+                for (var i = 0; i < str.length; i++) {
+                    var temp = str.charAt(i);
+                    if (temp !== ' ' && temp !== '!' && temp !== '?') {
+                        let code = temp.charCodeAt(0);
+                        string += String.fromCharCode(
+                            ((code - 97 - 13 + 26) % 26) + 97,
+                        );
+                    } else {
+                        string += temp;
+                    }
+                }
+                return string;
+            }
+
+            let input = document.getElementById('myArea02').value.toLowerCase();
+
+            document.getElementById('myArea03').value = caesar(input);
         }
     "
 /><br /><br />
 
 <textarea id="myArea03" rows="4" cols="70"></textarea><br />
+
+<!-- 
+Ideally, the best plan would be to go onto one letter, then shift that letter up to the next,
+like 
+
+A -> B, B -> C, etcetera.
+ 
+for Z, have it roll back to A.
+
+Z -> A.
+
+It'll have to ignore spaces, and also have a plan to stop and roll back.
+
+looks like substring manipulation by the sounds of it.
+Have it do it 1-2x for "encoding" and for "decoding"
+do the inverse operation. I'll create two different options.
+
+-->
