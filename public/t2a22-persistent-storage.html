@@ -1,49 +1,64 @@
-<h2>t2a22 - local storage</h2>
-
-Use local storage to make a to-do list
-
-<body
-    onload="
-        {
-            myStorage = localStorage.getItem('myStoredText');
-            if (myStorage != null) {
-                document.getElementById('myText1').value = myStorage;
-            }
-        }
-    "
->
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial scale=1.0" />
+        <title>t2a22</title>
+        <link rel="stylesheet" href="../baseline.css" />
+        <script src="../theme.js" defer></script>
+    </head>
     <body
-        onunload="
+        onload="
             {
-                localstorage.setItem('myStoredText', document.getElementById('myText1').value);
+                myStorage = localStorage.getItem('myStoredText');
+                if (myStorage != null) {
+                    document.getElementById('myText1').value = myStorage;
+                }
             }
         "
     >
-        Text example:
-        <input
-            id="myText1"
-            type="text"
-            size="70"
-            value=""
-            placeholder="Write here to store"
-        /><br />
+        <main>
+            <h2>t2a22 - local storage</h2>
 
-        <input
-            type="button"
-            value="Store Text"
-            onClick="{
-                localStorage.setItem('myStoredText', document.getElementById('myText1').value)
-                alert(document.getElementById('myText1').value + ' \nHas been stored')
-                document.getElementById('myText1').value = ''
-                }"
-        />
+            <p>Use local storage to make a to-do list</p>
 
-        <input
-            type="button"
-            value="Retrieve Text"
-            onClick="{
-   document.getElementById('myText1').value = localStorage.getItem('myStoredText')
-}"
-        />
+            <body
+                onunload="
+                    {
+                        localstorage.setItem(
+                            'myStoredText',
+                            document.getElementById('myText1').value
+                        );
+                    }
+                "
+            >
+                Text example:
+                <input
+                    id="myText1"
+                    type="text"
+                    size="70"
+                    value=""
+                    placeholder="Write here to store"
+                /><br />
+
+                <input
+                    type="button"
+                    value="Store Text"
+                    onClick="{
+                    localStorage.setItem('myStoredText', document.getElementById('myText1').value)
+                    alert(document.getElementById('myText1').value + ' \nHas been stored')
+                    document.getElementById('myText1').value = ''
+                    }"
+                />
+
+                <input
+                    type="button"
+                    value="Retrieve Text"
+                    onClick="{
+                    document.getElementById('myText1').value = localStorage.getItem('myStoredText')
+                    }"
+                />
+            </body>
+        </main>
     </body>
-</body>
+</html>
