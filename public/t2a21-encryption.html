@@ -1,80 +1,156 @@
-<h1 align="center">t2a21-encryption</h1>
-<textarea id="myArea01" rows="4" cols="70">Hello how are you</textarea><br />
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t1a21</title>
+        <link rel="stylesheet" href="../baseline.css" />
+        <script src="../theme.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <h1 align="center">t2a21 - encoding</h1>
+            <!-- big e can't even tell the difference between encoding and encryption -->
 
-<input
-    type="button"
-    value="encrypt"
-    onclick="
-        {
-            function caesar(str) {
-                let string = '';
-                for (var i = 0; i < str.length; i++) {
-                    var temp = str.charAt(i);
-                    if (temp !== ' ' && temp !== '!' && temp !== '?') {
-                        let code = temp.charCodeAt(0);
-                        string += String.fromCharCode(
-                            ((code - 97 + 13 + 26) % 26) + 97,
-                        );
-                    } else {
-                        string += temp;
+            <p>
+                Basic Caesar encoder/decoder that shifts all characters based on user input
+                (ROT-X)<br />
+            </p>
+
+            <!-- change this to only allow values 1-26 -->
+            <input type="number" id="shift" placeholder="Cipher number" /><br />
+            <br />
+
+            <textarea id="myArea01" rows="4" cols="70" placeholder="Input"></textarea><br />
+
+            <!-- honestly, i could probably have this be it's own script, just with nested functions depending on use case. 
+                Seems easy enough.
+            -->
+
+            <input
+                type="button"
+                value="encrypt ROT"
+                onclick="
+                    {
+                        function caesar(str) {
+                            const shiftNum = Number(document.getElementById('shift').value); // converts from string to number.
+                            if (shiftNum / 1) {
+                                let string = '';
+                                for (let i = 0; i < str.length; i++) {
+                                    let temp = str.charAt(i);
+                                    if (
+                                        // excludes punctuation from ending up in the cipher, then runs everything else.
+                                        temp !== ' ' &&
+                                        temp !== '!' &&
+                                        temp !== '?' &&
+                                        temp !== '.' &&
+                                        temp !== ',' &&
+                                        temp !== `'` &&
+                                        temp !== '`'
+                                    ) {
+                                        let code = temp.charCodeAt(0);
+                                        if (temp == temp.toLowerCase()) {
+                                            // check for if code is lowercase, and then shift for those letters.
+                                            string += String.fromCharCode(
+                                                ((code - 97 + shiftNum) % 26) + 97
+                                            );
+                                        } else {
+                                            // otherwise, assuming uppercase, shift those by their respective lettering.
+                                            string += String.fromCharCode(
+                                                ((code - 65 + shiftNum) % 26) + 65
+                                            );
+                                            console.log(code); // check in the console to see if case-sensitive ciphering worked.
+                                            // alert(code) // used in early prototyping, this can be removed
+                                        }
+                                    } else {
+                                        string += temp;
+                                    }
+                                }
+                                return string;
+                            } else {
+                                alert('Please enter a valid number for decryption.');
+                            }
+                            /*  some unicorn wisdom for unicode:
+                                charCodeAt is for unicode. lettercase words begin at Decimal 97, or U+0061. uppercase is 65, or U+0041. 
+                                the INTENDED assignment was just to shift two letters, but seeing as i'm already this far 
+                            */
+                        }
+
+                        let input = document.getElementById('myArea01').value;
+
+                        // quick check to see if the user didn't put anything in the textbox
+                        if (input == '') {
+                            alert('Please input into the encrypted text box before encrypting.');
+                        }
+
+                        document.getElementById('myArea02').value = caesar(input);
                     }
-                }
-                return string;
-            }
+                "
+            /><br /><br />
 
-            let input = document.getElementById('myArea01').value.toLowerCase();
+            <textarea id="myArea02" rows="4" cols="70" placeholder="Encrypted text"></textarea
+            ><br />
 
-            document.getElementById('myArea02').value = caesar(input);
-        }
-    "
-/><br /><br />
+            <input
+                type="button"
+                value="decrypt ROT"
+                onclick="
+                    {
+                        function caesar(str) {
+                            const shiftNum = Number(document.getElementById('shift').value);
+                            if (shiftNum / 1) {
+                                let string = '';
+                                for (let i = 0; i < str.length; i++) {
+                                    let temp = str.charAt(i);
+                                    if (
+                                        temp !== ' ' &&
+                                        temp !== '!' &&
+                                        temp !== '?' &&
+                                        temp !== '.' &&
+                                        temp !== ',' &&
+                                        temp !== `'` &&
+                                        temp !== '`'
+                                    ) {
+                                        let code = temp.charCodeAt(0);
+                                        if (temp == temp.toLowerCase()) {
+                                            string += String.fromCharCode(
+                                                ((code - 97 - shiftNum + 26) % 26) + 97
+                                            ); // the +26 value is necessary. without it the cipher fails,
+                                        } else {
+                                            // but it also allows for shiftNum to have numbers 1<=13<=26.
+                                            string += String.fromCharCode(
+                                                ((code - 65 - shiftNum + 26) % 26) + 65
+                                            );
+                                        }
+                                    } else {
+                                        string += temp;
+                                    }
+                                }
+                                return string;
+                            }
+                        }
 
-<textarea id="myArea02" rows="4" cols="70"></textarea><br />
+                        let input = document.getElementById('myArea02').value;
 
-<input
-    type="button"
-    value="decrypt"
-    onclick="
-        {
-            function caesar(str) {
-                let string = '';
-                for (var i = 0; i < str.length; i++) {
-                    var temp = str.charAt(i);
-                    if (temp !== ' ' && temp !== '!' && temp !== '?') {
-                        let code = temp.charCodeAt(0);
-                        string += String.fromCharCode(
-                            ((code - 97 - 13 + 26) % 26) + 97,
-                        );
-                    } else {
-                        string += temp;
+                        // quick check to see if there isn't anything in the textbox
+                        if (input == '') {
+                            alert('Please input an encoded phrase into the textbox.');
+                        }
+
+                        document.getElementById('myArea03').value = caesar(input);
                     }
-                }
-                return string;
-            }
+                "
+            /><br /><br />
 
-            let input = document.getElementById('myArea02').value.toLowerCase();
+            <textarea id="myArea03" rows="4" cols="70" placeholder="Decrypted text"></textarea
+            ><br />
 
-            document.getElementById('myArea03').value = caesar(input);
-        }
-    "
-/><br /><br />
-
-<textarea id="myArea03" rows="4" cols="70"></textarea><br />
-
-<!-- 
-Ideally, the best plan would be to go onto one letter, then shift that letter up to the next,
-like 
-
-A -> B, B -> C, etcetera.
- 
-for Z, have it roll back to A.
-
-Z -> A.
-
-It'll have to ignore spaces, and also have a plan to stop and roll back.
-
-looks like substring manipulation by the sounds of it.
-Have it do it 1-2x for "encoding" and for "decoding"
-do the inverse operation. I'll create two different options.
-
--->
+            <hr />
+            <p>Last updated: <span id="lastModified"></span></p>
+        </main>
+        <script>
+            // Display the document last modified date. DON'T TOUCH THIS. MANDATORY ON ALL PAGES.
+            document.getElementById("lastModified").textContent = document.lastModified;
+        </script>
+    </body>
+</html>
