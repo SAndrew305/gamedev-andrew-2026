@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>t2a23</title>
+        <link rel="stylesheet" href="../baseline.css" />
+        <script src="../theme.js" defer></script>
+    </head>
+    <body>
+        <main>
+            <h1 align="center">t2a23 - canvas</h1>
+            <hr />
+            Click the button to draw basic shapes, then add more.
+
+            <input
+                type="button"
+                value="Draw Basic Shapes"
+                onclick="{
+                    myContext.clearRect(0, 0, myCanvas.width, myCanvas.height);
+                    
+                    // line
+                    myContext.beginPath();
+                    myContext.lineWidth = 3;
+                    myContext.strokeStyle = 'black';
+                    myContext.moveTo(20,20); // start (x, y)
+                    myContext.lineTo(150,20); // end (x, y)
+                    myContext.stroke();
+
+                    // rectangle
+                    myContext.fillStyle = 'blue';
+                    myContext.fillRect(30, 50, 100, 60); // (x, y, width, height)
+
+                    // circle
+                    myContext.beginPath();
+                    myContext.lineWidth = 5;
+                    myContext.strokeStyle ='green';
+                    myContext.arc(220, 80, 0, 2 * 3.14159); // (x, y, radius, start, end)
+                    myContext.stroke();
+
+                    // text
+                    myContext.fillStyle = 'red';
+                    myContext.font = '24px Arial';
+                    myContext.fillText();
+
+                }"
+            >
+
+            <canvas
+                id="thisCanvas"
+                width="500"
+                height="300"
+                style="border:1px solid #000;
+                background-color: #fff;"
+            ></canvas>
+        </main>
+    </body>
+    <script>
+        let myCanvas = document.getElementById('thisCanvas');
+        let myContext = myCanvas.getContext('2d');
+    </script>
+</html>
