@@ -6,7 +6,40 @@
         <title>t1a21</title>
         <link rel="stylesheet" href="../baseline.css" />
         <script src="../theme.js" defer></script>
-    </head>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+        <script>
+            // keep OG section closed until a button is pressed. working on it.
+            $(document).ready(function() {
+                $(".originalAssignment").hide();
+                buttonContextOg = document.getElementById('buttonContextOg');
+            });
+
+            let buttonContextOg;
+            console.log(buttonContextOg);
+            let codeShowing = false;
+            
+            function showOriginal() {
+                console.log('Function called');
+                console.log('Current State:', codeShowing);
+
+
+                if (codeShowing == false){
+                    $('.originalAssignment').show();
+                    buttonContextOg.textContent = 'Hide Original Assignment';
+                    codeShowing = true;
+                    console.log('Post-Execution State:', codeShowing);
+                }
+                else if (codeShowing == true) {
+                    $('.originalAssignment').hide();
+                    buttonContextOg.textContent = 'Show Original Assignment';
+                    codeShowing = false;
+                    console.log('Post-Execution State:', codeShowing);
+                }
+            }
+
+        </script>
+        
     <body>
         <main>
             <h1 align="center">t2a21 - encoding</h1>
@@ -17,15 +50,8 @@
                 (ROT-X)<br />
             </p>
 
-            <!-- change this to only allow values 1-26 -->
-            
             Set Cipher amount here ->
-            <input 
-                type="number" 
-                id="shift"
-                min="1"
-                max="26"
-            />
+            <input type="number" id="shift" min="1" max="26" />
             <br />
             <br />
 
@@ -151,7 +177,218 @@
             /><br /><br />
 
             <textarea id="myArea03" rows="4" cols="70" placeholder="Decrypted text"></textarea
-            ><br />
+            ><br /><br /><br />
+
+            <button onclick="showOriginal()">
+                <span id="buttonContextOg">Show Original Assignment</span>
+            </button>
+
+            <section class="originalAssignment">
+                <hr />
+                <h1 align="center">t2a21 - spy</h1>
+
+                ROT-1 Encoder / Decoder. <br /><br />
+
+                <textarea id="myArea11" rows="4" cols="70">Hello how are you</textarea><br />
+
+                <input
+                    type="button"
+                    value="encrypt"
+                    onclick="
+                        {
+                            let myTemp = '';
+                            myString = document
+                                .getElementById('myArea11')
+                                .value.toLowerCase()
+                                .split('');
+                            for (let myLoop = 0; myLoop < myString.length; myLoop++) {
+                                myTemp = myString[myLoop];
+                                if (myString[myLoop] == 'a') {
+                                    myTemp = 'b';
+                                }
+                                if (myString[myLoop] == 'b') {
+                                    myTemp = 'c';
+                                }
+                                if (myString[myLoop] == 'c') {
+                                    myTemp = 'd';
+                                }
+                                if (myString[myLoop] == 'd') {
+                                    myTemp = 'e';
+                                }
+                                if (myString[myLoop] == 'e') {
+                                    myTemp = 'f';
+                                }
+                                if (myString[myLoop] == 'f') {
+                                    myTemp = 'g';
+                                }
+                                if (myString[myLoop] == 'g') {
+                                    myTemp = 'h';
+                                }
+                                if (myString[myLoop] == 'h') {
+                                    myTemp = 'i';
+                                }
+                                if (myString[myLoop] == 'i') {
+                                    myTemp = 'j';
+                                }
+                                if (myString[myLoop] == 'j') {
+                                    myTemp = 'k';
+                                }
+                                if (myString[myLoop] == 'k') {
+                                    myTemp = 'l';
+                                }
+                                if (myString[myLoop] == 'l') {
+                                    myTemp = 'm';
+                                }
+                                if (myString[myLoop] == 'm') {
+                                    myTemp = 'n';
+                                }
+                                if (myString[myLoop] == 'n') {
+                                    myTemp = 'o';
+                                }
+                                if (myString[myLoop] == 'o') {
+                                    myTemp = 'p';
+                                }
+                                if (myString[myLoop] == 'p') {
+                                    myTemp = 'q';
+                                }
+                                if (myString[myLoop] == 'q') {
+                                    myTemp = 'r';
+                                }
+                                if (myString[myLoop] == 'r') {
+                                    myTemp = 's';
+                                }
+                                if (myString[myLoop] == 's') {
+                                    myTemp = 't';
+                                }
+                                if (myString[myLoop] == 't') {
+                                    myTemp = 'u';
+                                }
+                                if (myString[myLoop] == 'u') {
+                                    myTemp = 'v';
+                                }
+                                if (myString[myLoop] == 'v') {
+                                    myTemp = 'w';
+                                }
+                                if (myString[myLoop] == 'w') {
+                                    myTemp = 'x';
+                                }
+                                if (myString[myLoop] == 'x') {
+                                    myTemp = 'y';
+                                }
+                                if (myString[myLoop] == 'y') {
+                                    myTemp = 'z';
+                                }
+                                if (myString[myLoop] == 'z') {
+                                    myTemp = 'a';
+                                }
+                                myString[myLoop] = myTemp;
+                            }
+                            document.getElementById('myArea12').value = myString.join('');
+                        }
+                    "
+                /><br /><br />
+
+                <textarea id="myArea12" rows="4" cols="70"></textarea><br />
+
+                <input
+                    type="button"
+                    value="decrypt"
+                    onclick="
+                        {
+                            let myTemp = '';
+                            myString = document
+                                .getElementById('myArea12')
+                                .value.toLowerCase()
+                                .split('');
+                            for (let myLoop = 0; myLoop < myString.length; myLoop++) {
+                                myTemp = myString[myLoop];
+                                if (myString[myLoop] == 'a') {
+                                    myTemp = 'z';
+                                }
+                                if (myString[myLoop] == 'b') {
+                                    myTemp = 'a';
+                                }
+                                if (myString[myLoop] == 'c') {
+                                    myTemp = 'b';
+                                }
+                                if (myString[myLoop] == 'd') {
+                                    myTemp = 'c';
+                                }
+                                if (myString[myLoop] == 'e') {
+                                    myTemp = 'd';
+                                }
+                                if (myString[myLoop] == 'f') {
+                                    myTemp = 'e';
+                                }
+                                if (myString[myLoop] == 'g') {
+                                    myTemp = 'f';
+                                }
+                                if (myString[myLoop] == 'h') {
+                                    myTemp = 'g';
+                                }
+                                if (myString[myLoop] == 'i') {
+                                    myTemp = 'h';
+                                }
+                                if (myString[myLoop] == 'j') {
+                                    myTemp = 'i';
+                                }
+                                if (myString[myLoop] == 'k') {
+                                    myTemp = 'j';
+                                }
+                                if (myString[myLoop] == 'l') {
+                                    myTemp = 'k';
+                                }
+                                if (myString[myLoop] == 'm') {
+                                    myTemp = 'l';
+                                }
+                                if (myString[myLoop] == 'n') {
+                                    myTemp = 'm';
+                                }
+                                if (myString[myLoop] == 'o') {
+                                    myTemp = 'n';
+                                }
+                                if (myString[myLoop] == 'p') {
+                                    myTemp = 'o';
+                                }
+                                if (myString[myLoop] == 'q') {
+                                    myTemp = 'p';
+                                }
+                                if (myString[myLoop] == 'r') {
+                                    myTemp = 'q';
+                                }
+                                if (myString[myLoop] == 's') {
+                                    myTemp = 'r';
+                                }
+                                if (myString[myLoop] == 't') {
+                                    myTemp = 's';
+                                }
+                                if (myString[myLoop] == 'u') {
+                                    myTemp = 't';
+                                }
+                                if (myString[myLoop] == 'v') {
+                                    myTemp = 'u';
+                                }
+                                if (myString[myLoop] == 'w') {
+                                    myTemp = 'v';
+                                }
+                                if (myString[myLoop] == 'x') {
+                                    myTemp = 'w';
+                                }
+                                if (myString[myLoop] == 'y') {
+                                    myTemp = 'x';
+                                }
+                                if (myString[myLoop] == 'z') {
+                                    myTemp = 'y';
+                                }
+                                myString[myLoop] = myTemp;
+                            }
+                            document.getElementById('myArea13').value = myString.join('');
+                        }
+                    "
+                /><br /><br />
+
+                <textarea id="myArea13" rows="4" cols="70"></textarea><br />
+            </section>
 
             <hr />
             <p>Last updated: <span id="lastModified"></span></p>
